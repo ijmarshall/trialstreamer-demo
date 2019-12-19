@@ -8,16 +8,32 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-regular-svg-icons": "^5.11.2",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/vue-fontawesome": "^0.1.8",
+    "@johmun/vue-tags-input": "^2.1.0",
+    "axios": "^0.19.0",
+    "bootstrap-vue": "^2.0.4",
     "core-js": "^3.4.3",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.6.0",
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.0",
     "@vue/cli-service": "^4.1.0",
     "babel-eslint": "^10.0.3",
+    "bootstrap": "^4.3.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "mutationobserver-shim": "^0.3.3",
+    "node-sass": "^4.12.0",
+    "popper.js": "^1.15.0",
+    "portal-vue": "^2.1.4",
+    "sass-loader": "^7.1.0",
+    "vue-cli-plugin-bootstrap-vue": "^0.5.0",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
@@ -29,7 +45,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
