@@ -13,7 +13,6 @@
 
 <script>
 import VueTagsInput from '@johmun/vue-tags-input';
-
 import axios from 'axios';
 
 export default {
@@ -66,6 +65,11 @@ export default {
 .search {
     width: 50%;
     margin: 0 auto;
+}
+
+.search .vue-tags-input {
+  max-width: none;
+  width: 100%;
 }
 
   .vue-tags-input .ti-tag.population{
