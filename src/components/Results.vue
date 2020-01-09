@@ -1,8 +1,7 @@
 <template>
-  <div class="results">
-      {{ getTags }}
+  <div class="results">    
     <table>
-        <tr v-for="item in items"  v-bind:key="item"><td>{{ item.pmid }}</td>  <td>{{ item.ti }}</td> <td>{{ item.num_randomized }}</td></tr>
+        <tr v-for="item in getArticles"  v-bind:key="item"><td>{{ item.pmid }}</td>  <td>{{ item.ti }}</td> </tr>
     </table>
   </div>
 </template>
@@ -27,8 +26,12 @@ export default {
   computed: {
     getTags() {
       return this.$store.getters.getTags;
+    },
+    getArticles() {
+      return this.$store.getters.getArticles;
     }
   }
+
 }
 </script>
 

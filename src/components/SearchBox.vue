@@ -36,7 +36,12 @@ export default {
     update(newTags) {
       this.autocompleteItems = [];
       this.tags = newTags;
-      this.$store.commit('update', newTags);
+      this.$store.commit('updateTags', newTags);
+      const url = `http://localhost:5000/pico_mesh_query`;
+      axios.post(url, newTags).then(response => {
+        this.$store.commit('updateArticles', response.data);
+
+      }).catch(() => console.warn("The query didn't work"));
     },
     initItems() {
       if (this.tag.length < 2) return;
