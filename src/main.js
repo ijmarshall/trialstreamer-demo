@@ -1,17 +1,18 @@
 import '@babel/polyfill'
 import 'mutationobserver-shim'
 import Vue from 'vue'
-import './plugins/bootstrap-vue'
+// import './plugins/bootstrap-vue'
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+
 import App from './App.vue'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vuex from 'vuex'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(Vuex)
-library.add(faUserSecret)
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 
@@ -22,7 +23,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     updateTags (state, new_tags) {
-      state.tags = new_tags
+      state.tags = new_tags;
     },
     updateArticles (state, new_articles) {
       state.articles = new_articles
