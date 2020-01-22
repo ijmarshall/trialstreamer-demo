@@ -36,18 +36,18 @@ export default {
       this.autocompleteItems = [];
       this.tags = newTags;
       this.$store.commit('updateTags', newTags);
-      const url = `http://localhost:5000/picosearch`;
-        axios.post(url, {terms: newTags.map(item => ({field: item.classes, mesh_ui: item.mesh_ui}))}, {headers: {'api-key':'ZJ5J6mlWocHma4t9uun6MEDlRQaWtke#'}}).then(response => {
+        const url = `${process.env.VUE_APP_SERVER_URL}/picosearch`;
+        axios.post(url, {terms: newTags.map(item => ({field: item.classes, mesh_ui: item.mesh_ui}))}, {headers: {'api-key':process.env.VUE_APP_API_KEY}}).then(response => {
         this.$store.commit('updateArticles', response.data);
 
       }).catch(() => console.warn("The query didn't work"));
     },
     initItems() {
       if (this.tag.length < 2) return;
-      const url = `http://localhost:5000/autocomplete?q=${this.tag}`;
+        const url = `${process.env.VUE_APP_SERVER_URL}/autocomplete?q=${this.tag}`;
       clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {
-          axios.get(url, {headers: {"api-key": "ZJ5J6mlWocHma4t9uun6MEDlRQaWtke#"}}).then(response => {
+          axios.get(url, {headers: {"api-key": process.env.VUE_APP_API_KEY}}).then(response => {
               this.autocompleteItems = response.data.map(item => ({classes: item.field, text: item.mesh_pico_display, mesh_ui: item.mesh_ui}));
         }).catch(() => console.warn('Oh. Something went wrong'));
       }, 600);

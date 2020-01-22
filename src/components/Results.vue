@@ -31,11 +31,11 @@ export default {
   methods: {
     download: function() {
     axios({
-      url: 'http://localhost:5000/picosearch',
+        url: `${process.env.VUE_APP_SERVER_URL}/picosearch`,
       method: 'POST',
       data: {terms: this.getTags.map(item => ({field: item.classes, mesh_ui: item.mesh_ui})), retmode: 'ris'},
       responseType: 'blob',
-      headers: {'api-key': 'ZJ5J6mlWocHma4t9uun6MEDlRQaWtke#'}}
+      headers: {'api-key': process.env.VUE_APP_API_KEY}}
     ).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
