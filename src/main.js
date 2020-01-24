@@ -19,11 +19,19 @@ Vue.config.productionTip = false
 const store = new Vuex.Store({
   state: {
     tags: [],
+    pageNo: 1,
     articles: []
   },
   mutations: {
     updateTags (state, new_tags) {
       state.tags = new_tags;
+      state.pageNo = 1;
+    },
+    increasePage (state) {
+      state.pageNo += 1;
+    },
+    decreasePage (state) {
+      state.pageNo -= 1;
     },
     updateArticles (state, new_articles) {
       state.articles = new_articles

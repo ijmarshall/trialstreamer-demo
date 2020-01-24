@@ -6,7 +6,12 @@
      <b-button variant="info" v-bind:disabled="disableButtonBack" v-on:click="page_i -= 1"><b-icon icon="arrow-left"></b-icon></b-button>
      {{page_i}} of {{page_max}}
      <b-button variant="info" v-bind:disabled="disableButtonForward" v-on:click="page_i += 1"><b-icon icon="arrow-right"></b-icon></b-button>
-        <b-table striped hover :items="getArticles" :fields="fields" :sort-by.sync="sortBy" :sort-desc=true :per-page="page_len" :current-page="page_i"></b-table>
+        <b-table striped hover :items="getArticles" :fields="fields" :sort-by.sync="sortBy" :sort-desc=true :per-page="page_len" :current-page="page_i">
+              <template v-slot:cell(pmid_link)="data">
+                  <a v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${data.item.pmid}`" target="_blank">{{data.item.pmid}}</a>
+              </template>
+        
+        </b-table>
     </div>
 
         <!--    <b-table-simple>
@@ -52,9 +57,9 @@ export default {
         page_len: 10,
         sortBy: 'year',
         fields: [
-          {key: "pmid", sortable: true},
-          {key: "ti", sortable: false},
-          {key: "year", sortable: true}
+          {key: "pmid_link", label: "PubMed link"},
+          {key: "ti", label: "Title", sortable: false},
+          {key: "year", label: "Year", sortable: true},
           ],
       }
 
