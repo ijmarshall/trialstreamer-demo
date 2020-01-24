@@ -5,6 +5,7 @@
       :tags="tags"
       :autocomplete-items="autocompleteItems"
       :add-only-from-autocomplete="true"
+      placeholder="Start typing MeSH term..."
       @tags-changed="update"
       />
   </div>

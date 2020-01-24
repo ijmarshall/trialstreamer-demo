@@ -70,19 +70,19 @@ export default {
       return (this.page_i==1);
     },
     disableButtonForward() {
-      return (this.resultEndI>=this.getNumResults);
+      return (this.page_i>=this.page_max);
     },
     getNumResults() {
       return this.$store.getters.getArticles.length;
     },
     page_max() {
-        return Math.floor(this.getNumResults/this.page_len);
+        return Math.ceil(this.getNumResults/this.page_len);
     },
     getTags() {
       return this.$store.getters.getTags;
     },
     getArticles() {
-      return this.$store.getters.getArticles;
+        return this.$store.getters.getArticles;
     },
 
   }
