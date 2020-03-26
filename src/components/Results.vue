@@ -1,15 +1,23 @@
 <template>
   <div class="results">
     <div v-if="getTags.length>0">
+      <div class="results-nav">
       <p>{{ getNumResults }} articles found</p>
       <b-button v-bind:disabled="getNumResults==0" v-on:click="download"><b-icon icon="cloud-download"></b-icon></b-button>
      <b-button variant="info" v-bind:disabled="disableButtonBack" v-on:click="page_i -= 1"><b-icon icon="arrow-left"></b-icon></b-button>
      {{page_i}} of {{page_max}}
      <b-button variant="info" v-bind:disabled="disableButtonForward" v-on:click="page_i += 1"><b-icon icon="arrow-right"></b-icon></b-button>
+   </div>
         <b-table striped hover :items="getArticles" :fields="fields" :sort-by.sync="sortBy" :sort-desc=true :per-page="page_len" :current-page="page_i">
               <template v-slot:cell(pmid_link)="data">
                   <a v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${data.item.pmid}`" target="_blank">{{data.item.pmid}}</a>
               </template>
+
+              <template v-slot:cell(ti_punchline)="data">
+                  <h5>{{ data.item.ti }}</h5>
+                  <p>{{ data.item.punchline_text }}</p>                  
+              </template>
+
         
         </b-table>
     </div>
@@ -58,7 +66,7 @@ export default {
         sortBy: 'year',
         fields: [
           {key: "pmid_link", label: "PubMed link"},
-          {key: "ti", label: "Title", sortable: false},
+          {key: "ti_punchline", label: "Title", sortable: false},
           {key: "year", label: "Year", sortable: true},
           ],
       }
@@ -97,6 +105,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.results {
+  text-align: left;
+}
+
+.results-nav {
+  text-align: center;
+}
+
+
 h3 {
   margin: 40px 0 0;
 }
