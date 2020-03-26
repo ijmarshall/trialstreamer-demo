@@ -3,9 +3,9 @@
     <div v-if="getTags.length>0">
       <p>{{ getNumResults }} articles found</p>
       <b-button v-bind:disabled="getNumResults==0" v-on:click="download"><b-icon icon="cloud-download"></b-icon></b-button>
-     <b-button variant="info" v-bind:disabled="disableButtonBack" v-on:click="page_i -= 1"><b-icon icon="arrow-left"></b-icon></b-button>
+      <b-button variant="info" v-bind:disabled="disableButtonBack" v-on:click="decreasePage"><b-icon icon="arrow-left"></b-icon></b-button>
      {{page_i}} of {{page_max}}
-     <b-button variant="info" v-bind:disabled="disableButtonForward" v-on:click="page_i += 1"><b-icon icon="arrow-right"></b-icon></b-button>
+      <b-button variant="info" v-bind:disabled="disableButtonForward" v-on:click="increasePage"><b-icon icon="arrow-right"></b-icon></b-button>
         <b-table striped hover :items="getArticles" :fields="fields" :sort-by.sync="sortBy" :sort-desc=true :per-page="page_len" :current-page="page_i">
               <template v-slot:cell(pmid_link)="data">
                   <a v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${data.item.pmid}`" target="_blank">{{data.item.pmid}}</a>
@@ -49,11 +49,16 @@ export default {
   document.body.appendChild(link);
       link.click();
 });
-    }
+    },
+        increasePage: function() {
+            this.$store.commit("increasePage");
+        },
+        decreasePage: function() {
+            this.$store.commit("decreasePage");
+        },
   },
   data: function () {
       return {
-        page_i: 1,
         page_len: 10,
         sortBy: 'year',
         fields: [
@@ -65,6 +70,9 @@ export default {
 
     },
   computed: {
+    page_i() {
+        return this.$store.getters.getPage;
+    },
     resultStartI() {
       return this.page_i * this.page_len;
     },
@@ -90,7 +98,8 @@ export default {
         return this.$store.getters.getArticles;
     },
 
-  }
+  },
+
 
 }
 </script>
