@@ -3,8 +3,7 @@
     <div
       v-if="getLoadingArticles"
       class="d-flex justify-content-center"
-      style="margin-top: 4rem;"
-    >
+      style="margin-top: 4rem;">
       <b-spinner type="grow" label="Loading..."></b-spinner>
     </div>
     <div v-else>
@@ -41,22 +40,19 @@
         >
           <b-card
             v-bind:title="item.ti"
-            class="result-card shadow-sm p-3 mb-5 bg-white rounded"
-          >
+            class="result-card shadow-sm p-3 mb-5 bg-white rounded">
             <div
               v-if="item.num_randomized"
               class="num-randomized"
               v-b-tooltip.hover.right
-              title="Number of participants randomized, extracted using machine learning"
-            >
+              title="Number of participants randomized, extracted using machine learning">
               n={{ item.num_randomized }}
             </div>
             <h6 class="card-subtitle text-muted mb-2">
               <a
                 v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`"
                 target="_blank"
-                >{{ item.pmid }}</a
-              >
+                >{{ item.pmid }}</a>
               {{ item.citation }}
             </h6>
             <b-card-text>
@@ -68,12 +64,10 @@
               <b-container style="margin: 1em -15px 0 -15px;">
                 <b-row>
                   <b-col>
-                    <b-badge class="population-badge dim-badge"
-                      >Population</b-badge
-                    >
+                    <b-badge class="population-badge dim-badge">Population</b-badge>
                     <ul>
                       <li v-for="p in distinct(item.population)" :key="p">
-                        {{ p }}
+                        {{ fixParens(p) }}
                       </li>
                       <li v-if="!item.population.length">
                         <em>None extracted</em>
@@ -83,11 +77,10 @@
 
                   <b-col>
                     <b-badge class="intervention-badge dim-badge"
-                      >Interventions</b-badge
-                    >
+                      >Interventions</b-badge>
                     <ul>
                       <li v-for="i in distinct(item.interventions)" :key="i">
-                        {{ i }}
+                        {{ fixParens(i) }}
                       </li>
                       <li v-if="!item.interventions.length">
                         <em>None extracted</em>
@@ -99,7 +92,7 @@
                     <b-badge class="outcome-badge dim-badge">Outcomes</b-badge>
                     <ul>
                       <li v-for="o in distinct(item.outcomes)" :key="o">
-                        {{ o }}
+                        {{ fixParens(o) }}
                       </li>
                       <li v-if="!item.outcomes.length">
                         <em>None extracted</em>
@@ -110,8 +103,7 @@
                 <div
                   class="risk-of-bias"
                   v-b-tooltip.hover.right
-                  title="As determined by RobotReviewer based on the abstract text"
-                >
+                  title="As determined by RobotReviewer based on the abstract text">
                   <div>
                     <span>Allocation concealment: </span>
                     <span v-bind:data-bias="item.low_ac_bias ? 'l' : 'h'">{{
@@ -139,8 +131,7 @@
           <b-pagination
             v-model="currentPage"
             :total-rows="rows"
-            :per-page="perPage"
-          ></b-pagination>
+            :per-page="perPage"></b-pagination>
         </div>
       </div>
       <div v-else class="result-cards">
@@ -160,9 +151,9 @@ import axios from "axios";
 
 function getPaginatedItems(items, page, pageSize) {
   var pg = page || 1,
-    pgSize = pageSize || 100,
-    offset = (pg - 1) * pgSize,
-    pagedItems = window._.drop(items, offset).slice(0, pgSize);
+      pgSize = pageSize || 100,
+      offset = (pg - 1) * pgSize,
+      pagedItems = window._.drop(items, offset).slice(0, pgSize);
   return pagedItems;
 }
 
@@ -187,6 +178,20 @@ export default {
   },
   props: {},
   methods: {
+    fixParens: function(s) {
+      var missedOpen = 0, missedClosed = 0;
+      for (let i = 0; i < s.length; i++) {
+        if (s[i] == '(') {
+          missedClosed++;
+        } else if (s[i] == ')') {
+          if (missedClosed > 0)
+            missedClosed--;
+          else
+            missedOpen++;
+        }
+      }
+      return Array(missedOpen + 1).join('(') + s + Array(missedClosed + 1).join(')');
+    },
     distinct: function (strs) {
       let d = new Map(strs.map((s) => [s.toLowerCase(), s]));
       return [...d.values()];
