@@ -9,8 +9,8 @@
     <div v-else>
       <div v-if="sortedArticles.length > 0">
         <p style="font-size: small; text-align: right;">
-          Showing <span v-if="isTruncated">first 250 results only</span
-          ><span v-else>{{ rows }} results</span>
+          Showing <span v-if="isTruncated">first 250 results only</span>
+          <span v-else>{{ rows }} results</span>
         </p>
         <b-button-toolbar class="justify-content-end">
           <b-button-group>
@@ -20,15 +20,14 @@
               button-variant="light"
               size="sm"
               buttons
-              name="radios-btn-default"
-            ></b-form-radio-group>
+              name="radios-btn-default">
+            </b-form-radio-group>
             <b-button
               v-bind:disabled="rows == 0"
               v-on:click="download"
               size="sm"
               v-b-tooltip.hover
-              title="Download citations"
-            >
+              title="Download citations">
               <b-icon icon="cloud-download"></b-icon>
             </b-button>
           </b-button-group>
@@ -36,8 +35,7 @@
         <div
           v-for="item in sortedArticles"
           :key="item.pmid"
-          class="result-cards"
-        >
+          class="result-cards">
           <b-card
             v-bind:title="item.ti"
             class="result-card shadow-sm p-3 mb-5 bg-white rounded">
@@ -51,8 +49,7 @@
             <h6 class="card-subtitle text-muted mb-2">
               <a
                 v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`"
-                target="_blank"
-                >{{ item.pmid }}</a>
+                target="_blank">{{ item.pmid }}</a>
               {{ item.citation }}
             </h6>
             <b-card-text>
@@ -106,21 +103,15 @@
                   title="As determined by RobotReviewer based on the abstract text">
                   <div>
                     <span>Allocation concealment: </span>
-                    <span v-bind:data-bias="item.low_ac_bias ? 'l' : 'h'">{{
-                      item.low_ac_bias ? "low" : "high/unknown"
-                    }}</span>
+                    <span v-bind:data-bias="item.low_ac_bias ? 'l' : 'h'">{{item.low_ac_bias ? "low" : "high/unknown"}}</span>
                   </div>
                   <div>
                     <span>Blinding of participants and personnel: </span>
-                    <span v-bind:data-bias="item.low_bpp_bias ? 'l' : 'h'">{{
-                      item.low_bpp_bias ? "low" : "high/unknown"
-                    }}</span>
+                    <span v-bind:data-bias="item.low_bpp_bias ? 'l' : 'h'">{{item.low_bpp_bias ? "low" : "high/unknown"}}</span>
                   </div>
                   <div>
                     <span>Random sequence generation: </span>
-                    <span v-bind:data-bias="item.low_rcg_bias ? 'l' : 'h'">{{
-                      item.low_rcg_bias ? "low" : "high/unknown"
-                    }}</span>
+                    <span v-bind:data-bias="item.low_rcg_bias ? 'l' : 'h'">{{item.low_rcg_bias ? "low" : "high/unknown"}}</span>
                   </div>
                 </div>
               </b-container>
@@ -257,7 +248,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .results {
   margin-bottom: 2em;
@@ -306,7 +296,6 @@ export default {
 }
 
 .num-randomized {
-  cursor: pointer;
   color: #212529;
   background-color: #dae0e5;
   position: absolute;
@@ -319,7 +308,6 @@ export default {
   font-size: 75%;
 }
 .risk-of-bias {
-  cursor: pointer;
   position: absolute;
   bottom: 0;
   right: 0;
