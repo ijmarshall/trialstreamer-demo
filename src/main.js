@@ -1,6 +1,9 @@
 import '@babel/polyfill'
 import 'mutationobserver-shim'
 import Vue from 'vue'
+import VueLodash from 'vue-lodash'
+import lodash from 'lodash'
+
 // import './plugins/bootstrap-vue'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
@@ -12,12 +15,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
-
+Vue.use(VueLodash, { lodash: lodash })
 
 Vue.config.productionTip = false
 
 const store = new Vuex.Store({
   state: {
+    loading_articles: false,
     tags: [],
     pageNo: 1,
     articles: []
@@ -27,14 +31,11 @@ const store = new Vuex.Store({
       state.tags = new_tags;
       state.pageNo = 1;
     },
-    increasePage (state) {
-      state.pageNo += 1;
-    },
-    decreasePage (state) {
-      state.pageNo -= 1;
-    },
     updateArticles (state, new_articles) {
-      state.articles = new_articles
+      state.articles = new_articles;
+    },
+    loadingArticles (state, loading) {
+      state.loading_articles = loading;
     }
   },
   getters: {
@@ -43,6 +44,9 @@ const store = new Vuex.Store({
     },
     getArticles(state) {
       return state.articles;
+    },
+    getLoadingArticles(state) {
+      return state.loading_articles;
     }
   },
 })
