@@ -92,7 +92,15 @@
           :total-rows="rows"
           :per-page="perPage"></b-pagination>
       </div>
+    </div>
+    <div v-else class="result-cards">
+      <div v-if="showExamples">
+        <strong>No results</strong>
       </div>
+      <div v-else>
+        Examples
+      </div>
+    </div>
   </div>
 </div>
 </template>
@@ -111,7 +119,7 @@ function getPaginatedItems(items, page, pageSize) {
 export default {
   name: 'Results',
   data() {
-return {
+    return {
       perPage: 25,
       currentPage: 1,
       newestFirst: true,
@@ -124,9 +132,7 @@ return {
       }]
     }
   },
-  props: {
-
-  },
+  props: {},
   methods: {
     distinct: function(strs) {
       let d = new Map(strs.map(s => [s.toLowerCase(), s]));
@@ -172,6 +178,9 @@ return {
     },
     isTruncated() {
       return this.$store.getters.getArticles.length >= 250;
+    },
+    showExamples() {
+      return !!this.$store.getters.getTags.length;
     },
     sortedArticles() {
       let newest = this.newestFirst;

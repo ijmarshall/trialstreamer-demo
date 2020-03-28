@@ -23,13 +23,11 @@ const store = new Vuex.Store({
   state: {
     loading_articles: false,
     tags: [],
-    pageNo: 1,
     articles: []
   },
   mutations: {
     updateTags (state, new_tags) {
       state.tags = new_tags;
-      state.pageNo = 1;
     },
     updateArticles (state, new_articles) {
       state.articles = new_articles;
