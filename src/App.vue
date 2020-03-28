@@ -1,23 +1,25 @@
 <template>
-<div id="app" class="container">
-    <Title/>
-    <SearchBox/>
-    <Results/>
-</div>
+  <div id="app" class="container">
+    <Title />
+    <SearchBox />
+    <Results />
+  </div>
 </template>
 
 <script>
-  import Title from './components/Title.vue'
-  import SearchBox from './components/SearchBox.vue'
-  import Results from './components/Results.vue'
-  export default {
-  name: 'app',
+import Title from "./components/Title.vue";
+import SearchBox from "./components/SearchBox.vue";
+import Results from "./components/Results.vue";
+
+export default {
+  name: "app",
   components: {
-  Title,
-  SearchBox,
-  Results,
-  }
-  }
+    Title,
+    SearchBox,
+    Results,
+  },
+};
+
 </script>
 
 <style>
@@ -52,10 +54,15 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
-html { overflow-y: scroll; }
+html {
+  overflow-y: scroll;
+}
 #app {
   text-align: center;
   color: #2c3e50;

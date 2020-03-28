@@ -8,56 +8,74 @@
       placeholder="Start typing MeSH terms..."
       @tags-changed="update"
       debounce="500"
-      style="max-width: none"
-      />
+      style="max-width: none;"
+    />
   </div>
-
 </template>
 
 <script>
-import VueTagsInput from '@johmun/vue-tags-input';
-import axios from 'axios';
+import VueTagsInput from "@johmun/vue-tags-input";
+import axios from "axios";
 export default {
-  name: 'SearchBox',
+  name: "SearchBox",
   components: {
     VueTagsInput,
   },
   data() {
     return {
-      tag: '',
+      tag: "",
       tags: [],
-      autocompleteItems: []
+      autocompleteItems: [],
     };
   },
   watch: {
-    'tag': 'initItems',
+    tag: "initItems",
   },
   methods: {
     update(newTags) {
       this.autocompleteItems = [];
       this.tags = newTags;
-      this.$store.commit('updateTags', newTags);
-      this.$store.commit('loadingArticles', true);
+      this.$store.commit("updateTags", newTags);
+      this.$store.commit("loadingArticles", true);
       let self = this;
 
       const url = `${process.env.VUE_APP_SERVER_URL}/picosearch`;
-      axios.post(url, {terms: newTags.map(item => ({field: item.classes, mesh_ui: item.mesh_ui}))}, {headers: {'api-key':process.env.VUE_APP_API_KEY}}).then(response => {
-        this.$store.commit('updateArticles', response.data);
-        this.$store.commit('loadingArticles', false);
-      }).catch(function() { console.warn("The query didn't work"); self.$store.commit('loadingArticles', false); });
+      axios
+        .post(
+          url,
+          {
+            terms: newTags.map((item) => ({
+              field: item.classes,
+              mesh_ui: item.mesh_ui,
+            })),
+          },
+          { headers: { "api-key": process.env.VUE_APP_API_KEY } }
+        )
+        .then((response) => {
+          this.$store.commit("updateArticles", response.data);
+          this.$store.commit("loadingArticles", false);
+        })
+        .catch(function () {
+          console.warn("The query didn't work");
+          self.$store.commit("loadingArticles", false);
+        });
     },
     initItems() {
       if (this.tag.length < 2) return;
       const url = `${process.env.VUE_APP_SERVER_URL}/autocomplete?q=${this.tag}`;
-          axios.get(url, {headers: {"api-key": process.env.VUE_APP_API_KEY}}).then(response => {
-              this.autocompleteItems = response.data.map(item => ({classes: item.field, text: item.mesh_pico_display, mesh_ui: item.mesh_ui}));
-        }).catch(() => console.warn('Oh. Something went wrong'));
+      axios
+        .get(url, { headers: { "api-key": process.env.VUE_APP_API_KEY } })
+        .then((response) => {
+          this.autocompleteItems = response.data.map((item) => ({
+            classes: item.field,
+            text: item.mesh_pico_display,
+            mesh_ui: item.mesh_ui,
+          }));
+        })
+        .catch(() => console.warn("Oh. Something went wrong"));
     },
-  }
+  },
 };
-
-
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -83,6 +101,4 @@ export default {
 .vue-tags-input .ti-tag.outcomes {
   background: var(--outcome-background);
 }
-
-
 </style>
