@@ -6,7 +6,7 @@
   <div v-else>
     <div v-if="sortedArticles.length > 0">
       <p style="font-size: small; text-align: right">
-        Showing <span v-if="isTruncated">first 250 results only</span><span v-else>{{numResults}} results</span></p>
+        Showing <span v-if="isTruncated">first 250 results only</span><span v-else>{{rows}} results</span></p>
       <b-button-toolbar class="justify-content-end">
         <b-button-group>
           <b-form-radio-group
@@ -16,8 +16,9 @@
             size="sm"
             buttons
             name="radios-btn-default"></b-form-radio-group>
-          <b-button v-bind:disabled="numResults==0" v-on:click="download"  size="sm" v-b-tooltip.hover  title="Download citations">
-            <b-icon icon="cloud-download"></b-icon></b-button>
+          <b-button v-bind:disabled="rows==0" v-on:click="download"  size="sm" v-b-tooltip.hover  title="Download citations">
+            <b-icon icon="cloud-download"></b-icon>
+          </b-button>
         </b-button-group>
       </b-button-toolbar>
       <div v-for="item in sortedArticles" :key="item.pmid" class="result-cards">
@@ -85,6 +86,12 @@
           </b-card-text>
         </b-card>
       </div>
+      <div class="d-flex justify-content-center">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"></b-pagination>
+      </div>
       </div>
   </div>
 </div>
@@ -93,10 +100,20 @@
 <script>
 import axios from 'axios';
 
+function getPaginatedItems(items, page, pageSize) {
+  var pg = page || 1,
+    pgSize = pageSize || 100,
+    offset = (pg - 1) * pgSize,
+    pagedItems = window._.drop(items, offset).slice(0, pgSize);
+  return  pagedItems;
+}
+
 export default {
   name: 'Results',
   data() {
-    return {
+return {
+      perPage: 25,
+      currentPage: 1,
       newestFirst: true,
       sortOptions: [{
         text: 'Newest first',
@@ -141,7 +158,7 @@ export default {
     },
   },
   computed: {
-    numResults() {
+    rows() {
       return this.$store.getters.getArticles.length;
     },
     getLoadingArticles() {
@@ -165,7 +182,8 @@ export default {
           return a.year - b.year;
         }
       }
-      return this.$store.getters.getArticles.slice().sort(sortFn);
+      let result = this.$store.getters.getArticles.slice().sort(sortFn);
+      return getPaginatedItems(result, this.currentPage, this.perPage);
     }
   }
 }
