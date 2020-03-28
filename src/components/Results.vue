@@ -66,9 +66,17 @@
               </b-col>
             </b-row>
             <div class="risk-of-bias">
-              <div><span>Allocation concealment: </span>{{item.low_ac_bias ? "low" : "high/unknown"}}</div>
-              <div><span>Blinding of participants and personnel: </span> {{item.low_bpp_bias ? "low" : "high/unknown"}}</div>
-              <div><span>Random sequence generation: </span> {{item.low_rcg_bias ? "low" : "high/unknown"}}</div>
+              <div><span>Allocation concealment: </span>
+                <span v-bind:data-bias="item.low_ac_bias ? 'l' : 'h'">{{item.low_ac_bias ? "low" : "high/unknown"}}</span>
+              </div>
+              <div>
+                <span>Blinding of participants and personnel: </span>
+                <span v-bind:data-bias="item.low_bpp_bias ? 'l' : 'h'">{{item.low_bpp_bias ? "low" : "high/unknown"}}</span>
+              </div>
+              <div>
+                <span>Random sequence generation: </span>
+                <span v-bind:data-bias="item.low_rcg_bias ? 'l' : 'h'">{{item.low_rcg_bias ? "low" : "high/unknown"}}</span>
+              </div>
             </div>
 
           </b-container>
@@ -175,8 +183,11 @@ export default {
   margin-top: 0;
   text-align: left;
 }
+.result-card, .result-card * {
+  transition: all 0.125s ease !important;
+}
 .result-card .dim-badge {
-  transition: initial !important;
+  transition: initial;
 }
 .result-card:hover {
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
@@ -207,8 +218,6 @@ export default {
 .population-badge {
   background-color: var(--population-background);
 }
-.num-randomized, .risk-of-bias {
-}
 
 .num-randomized {
   cursor: pointer;
@@ -232,14 +241,15 @@ export default {
   text-align: right;
   border-top-left-radius: .25rem;
   font-size: 75%;
-
 }
 .risk-of-bias > div {
   display: inline-block;
   margin-left: 1em;
 }
-.risk-of-bias > div > span {
+.risk-of-bias > div span:first-child {
   font-weight: bolder;
 }
-
+.result-card:hover .risk-of-bias span[data-bias ='l'] {
+  color: var(--green);
+}
 </style>
