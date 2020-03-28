@@ -8,6 +8,7 @@
       placeholder="Start typing MeSH terms..."
       @tags-changed="update"
       debounce="500"
+      style="max-width: none"
       />
   </div>
 
@@ -37,13 +38,13 @@ export default {
       this.tags = newTags;
       this.$store.commit('updateTags', newTags);
       this.$store.commit('loadingArticles', true);
+      let self = this;
 
       const url = `${process.env.VUE_APP_SERVER_URL}/picosearch`;
       axios.post(url, {terms: newTags.map(item => ({field: item.classes, mesh_ui: item.mesh_ui}))}, {headers: {'api-key':process.env.VUE_APP_API_KEY}}).then(response => {
         this.$store.commit('updateArticles', response.data);
         this.$store.commit('loadingArticles', false);
-
-      }).catch(function() { console.warn("The query didn't work"); this.$store.commit('loadingArticles', false); });
+      }).catch(function() { console.warn("The query didn't work"); self.$store.commit('loadingArticles', false); });
     },
     initItems() {
       if (this.tag.length < 2) return;

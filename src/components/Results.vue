@@ -4,10 +4,10 @@
     <b-spinner type="grow" label="Loading..."></b-spinner>
   </div>
   <div v-else>
-    <div v-if="getTags.length > 0">
+    <div v-if="sortedArticles.length > 0">
       <p style="font-size: small; text-align: right">
         Showing <span v-if="isTruncated">first 250 results only</span><span v-else>{{numResults}} results</span></p>
-      <b-button-toolbar class="justify-content-end" >
+      <b-button-toolbar class="justify-content-end">
         <b-button-group>
           <b-form-radio-group
             v-model="newestFirst"
@@ -77,16 +77,14 @@
                 <div>
                   <span>Random sequence generation: </span>
                   <span v-bind:data-bias="item.low_rcg_bias ? 'l' : 'h'">{{item.low_rcg_bias ? "low" : "high/unknown"}}</span>
+                </div>
               </div>
-            </div>
 
-          </b-container>
-
-
-        </b-card-text>
-      </b-card>
-    </div>
-  </div>
+            </b-container>
+          </b-card-text>
+        </b-card>
+      </div>
+      </div>
   </div>
 </div>
 </template>
