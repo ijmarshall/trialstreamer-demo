@@ -26,7 +26,8 @@
             n={{item.num_randomized}}
           </div>
           <h6 class="card-subtitle text-muted mb-2">
-            <a v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`" target="_blank">{{item.pmid}} ({{(item.year).toString()}})</a>
+            <a v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`" target="_blank">{{item.pmid}}</a>
+            {{item.citation}}
           </h6>
           <b-card-text>
             <span v-if="item.punchline_text.length">
