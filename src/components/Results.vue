@@ -178,6 +178,7 @@ export default {
   },
   props: {},
   methods: {
+    // https://stackoverflow.com/questions/26586753/javascript-add-missing-parentheses-in-string
     fixParens: function(s) {
       var missedOpen = 0, missedClosed = 0;
       for (let i = 0; i < s.length; i++) {
