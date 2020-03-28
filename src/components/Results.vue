@@ -21,7 +21,7 @@
     </b-button-toolbar>
     <div v-for="item in sortedArticles" :key="item.pmid" class="result-cards">
       <b-card v-bind:title="item.ti" class="result-card shadow-sm p-3 mb-5 bg-white rounded">
-        <div v-if="item.num_randomized" class="num-randomized" v-b-tooltip.hover.bottom title="Extracted using machine learning">
+        <div v-if="item.num_randomized" class="num-randomized" v-b-tooltip.hover.right title="Number of participants randomized, extracted using machine learning">
           n={{item.num_randomized}}
         </div>
         <h6 class="card-subtitle text-muted mb-2">
@@ -65,7 +65,7 @@
                 </ul>
               </b-col>
             </b-row>
-            <div class="risk-of-bias">
+            <div class="risk-of-bias" v-b-tooltip.hover.right title="As determined by RobotReviewer based on the abstract text">
               <div><span>Allocation concealment: </span>
                 <span v-bind:data-bias="item.low_ac_bias ? 'l' : 'h'">{{item.low_ac_bias ? "low" : "high/unknown"}}</span>
               </div>
@@ -233,6 +233,7 @@ export default {
   font-size: 75%;
 }
 .risk-of-bias {
+  cursor: pointer;
   position: absolute;
   bottom: 0;
   right: 0;
