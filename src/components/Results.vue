@@ -3,79 +3,80 @@
   <div v-if="getLoadingArticles" class="d-flex justify-content-center" style="margin-top: 4rem">
     <b-spinner type="grow" label="Loading..."></b-spinner>
   </div>
-  <div v-if="getTags.length > 0">
-    <p style="font-size: small; text-align: right">
-      Showing <span v-if="isTruncated">first 250 results only</span><span v-else>{{numResults}} results</span></p>
-    <b-button-toolbar class="justify-content-end" >
-      <b-button-group>
-        <b-form-radio-group
-          v-model="newestFirst"
-          :options="sortOptions"
-          button-variant="light"
-          size="sm"
-          buttons
-          name="radios-btn-default"></b-form-radio-group>
-        <b-button v-bind:disabled="numResults==0" v-on:click="download"  size="sm" v-b-tooltip.hover  title="Download citations">
-          <b-icon icon="cloud-download"></b-icon></b-button>
-      </b-button-group>
-    </b-button-toolbar>
-    <div v-for="item in sortedArticles" :key="item.pmid" class="result-cards">
-      <b-card v-bind:title="item.ti" class="result-card shadow-sm p-3 mb-5 bg-white rounded">
-        <div v-if="item.num_randomized" class="num-randomized" v-b-tooltip.hover.right title="Number of participants randomized, extracted using machine learning">
-          n={{item.num_randomized}}
-        </div>
-        <h6 class="card-subtitle text-muted mb-2">
-          <a v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`" target="_blank">{{item.pmid}} ({{(item.year).toString()}})</a>
-        </h6>
-        <b-card-text>
-          <span v-if="item.punchline_text.length">
-            {{item.punchline_text}}
-            <br />
-          </span>
+  <div v-else>
+    <div v-if="getTags.length > 0">
+      <p style="font-size: small; text-align: right">
+        Showing <span v-if="isTruncated">first 250 results only</span><span v-else>{{numResults}} results</span></p>
+      <b-button-toolbar class="justify-content-end" >
+        <b-button-group>
+          <b-form-radio-group
+            v-model="newestFirst"
+            :options="sortOptions"
+            button-variant="light"
+            size="sm"
+            buttons
+            name="radios-btn-default"></b-form-radio-group>
+          <b-button v-bind:disabled="numResults==0" v-on:click="download"  size="sm" v-b-tooltip.hover  title="Download citations">
+            <b-icon icon="cloud-download"></b-icon></b-button>
+        </b-button-group>
+      </b-button-toolbar>
+      <div v-for="item in sortedArticles" :key="item.pmid" class="result-cards">
+        <b-card v-bind:title="item.ti" class="result-card shadow-sm p-3 mb-5 bg-white rounded">
+          <div v-if="item.num_randomized" class="num-randomized" v-b-tooltip.hover.right title="Number of participants randomized, extracted using machine learning">
+            n={{item.num_randomized}}
+          </div>
+          <h6 class="card-subtitle text-muted mb-2">
+            <a v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`" target="_blank">{{item.pmid}} ({{(item.year).toString()}})</a>
+          </h6>
+          <b-card-text>
+            <span v-if="item.punchline_text.length">
+              {{item.punchline_text}}
+              <br />
+            </span>
 
-          <b-container style="margin: 1em -15px 0 -15px">
-            <b-row>
-              <b-col>
-                <b-badge class="population-badge dim-badge">Population</b-badge>
-                <ul>
-                  <li v-for="p in distinct(item.population)" :key="p">
-                    {{ p }}
-                  </li>
-                  <li v-if="!item.population.length"><em>None extracted</em></li>
-                </ul>
-              </b-col>
+            <b-container style="margin: 1em -15px 0 -15px">
+              <b-row>
+                <b-col>
+                  <b-badge class="population-badge dim-badge">Population</b-badge>
+                  <ul>
+                    <li v-for="p in distinct(item.population)" :key="p">
+                      {{ p }}
+                    </li>
+                    <li v-if="!item.population.length"><em>None extracted</em></li>
+                  </ul>
+                </b-col>
 
-              <b-col>
-                <b-badge class="intervention-badge dim-badge">Interventions</b-badge>
-                <ul>
-                  <li v-for="i in distinct(item.interventions)" :key="i">
-                    {{ i }}
-                  </li>
-                  <li v-if="!item.interventions.length"><em>None extracted</em></li>
-                </ul>
-              </b-col>
+                <b-col>
+                  <b-badge class="intervention-badge dim-badge">Interventions</b-badge>
+                  <ul>
+                    <li v-for="i in distinct(item.interventions)" :key="i">
+                      {{ i }}
+                    </li>
+                    <li v-if="!item.interventions.length"><em>None extracted</em></li>
+                  </ul>
+                </b-col>
 
-              <b-col>
-                <b-badge class="outcome-badge dim-badge">Outcomes</b-badge>
-                <ul>
-                  <li v-for="o in distinct(item.outcomes)" :key="o">
-                    {{ o }}
-                  </li>
-                  <li v-if="!item.outcomes.length"><em>None extracted</em></li>
-                </ul>
-              </b-col>
-            </b-row>
-            <div class="risk-of-bias" v-b-tooltip.hover.right title="As determined by RobotReviewer based on the abstract text">
-              <div><span>Allocation concealment: </span>
-                <span v-bind:data-bias="item.low_ac_bias ? 'l' : 'h'">{{item.low_ac_bias ? "low" : "high/unknown"}}</span>
-              </div>
-              <div>
-                <span>Blinding of participants and personnel: </span>
-                <span v-bind:data-bias="item.low_bpp_bias ? 'l' : 'h'">{{item.low_bpp_bias ? "low" : "high/unknown"}}</span>
-              </div>
-              <div>
-                <span>Random sequence generation: </span>
-                <span v-bind:data-bias="item.low_rcg_bias ? 'l' : 'h'">{{item.low_rcg_bias ? "low" : "high/unknown"}}</span>
+                <b-col>
+                  <b-badge class="outcome-badge dim-badge">Outcomes</b-badge>
+                  <ul>
+                    <li v-for="o in distinct(item.outcomes)" :key="o">
+                      {{ o }}
+                    </li>
+                    <li v-if="!item.outcomes.length"><em>None extracted</em></li>
+                  </ul>
+                </b-col>
+              </b-row>
+              <div class="risk-of-bias" v-b-tooltip.hover.right title="As determined by RobotReviewer based on the abstract text">
+                <div><span>Allocation concealment: </span>
+                  <span v-bind:data-bias="item.low_ac_bias ? 'l' : 'h'">{{item.low_ac_bias ? "low" : "high/unknown"}}</span>
+                </div>
+                <div>
+                  <span>Blinding of participants and personnel: </span>
+                  <span v-bind:data-bias="item.low_bpp_bias ? 'l' : 'h'">{{item.low_bpp_bias ? "low" : "high/unknown"}}</span>
+                </div>
+                <div>
+                  <span>Random sequence generation: </span>
+                  <span v-bind:data-bias="item.low_rcg_bias ? 'l' : 'h'">{{item.low_rcg_bias ? "low" : "high/unknown"}}</span>
               </div>
             </div>
 
@@ -85,6 +86,7 @@
         </b-card-text>
       </b-card>
     </div>
+  </div>
   </div>
 </div>
 </template>

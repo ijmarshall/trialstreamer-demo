@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
+<div id="app" class="container">
     <Title/>
     <SearchBox/>
     <Results/>
-  </div>
+</div>
 </template>
 
 <script>
@@ -26,10 +26,6 @@
   --intervention-background: #ffa600;
   --intervention-color: #000000;
   --outcome-background: #bc5090;
-}
-body {
-  max-width: 60vw;
-  margin: 0 auto !important;
 }
 #app {
   text-align: center;
