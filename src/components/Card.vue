@@ -2,6 +2,7 @@
   <b-card
     v-bind:title="item.ti"
     class="result-card shadow-sm p-3 mb-5 bg-white rounded">
+
     <div
       v-if="item.num_randomized"
       class="num-randomized"
@@ -9,18 +10,41 @@
       title="Number of participants randomized, extracted using machine learning">
       n={{ item.num_randomized }}
     </div>
-    <h6 class="card-subtitle text-muted mb-2">
+
+    <div
+      v-if="item.target_size"
+      class="num-randomized"
+      v-b-tooltip.hover.right
+      title="Target size of the trial, extracted using machine learning">
+      n={{ item.target_size }}
+    </div>
+
+
+    <h6 class="card-subtitle text-muted mb-2" v-if="item.article_type == 'preprint' ||  item.article_type == 'journal article'">
       <a
         v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`"
         target="_blank">{{ item.pmid }}</a>
       {{ item.citation }}
       <a
-        v-if="item.dois[0]"
+        v-if="item.dois && item.dois[0]"
         v-bind:href="`https://dx.doi.org/${item.dois[0]}`"
         target="_blank">{{ item.dois[0] }}</a>
     </h6>
+
+    <h6 class="card-subtitle text-muted mb-2" v-else>
+      {{item.regid}}, {{item.is_recruiting}}, {{item.is_rct}}
+    </h6>
+
+
     <b-card-text>
-      <span v-if="item.punchline_text.length">
+      <span v-if="item.countries && item.countries.length">
+        <strong>Date Registered:</strong> {{registered_date}}
+        <br />
+        <strong>Study Countries:</strong> {{ item.countries.join(", ") }}
+        <br />
+      </span>
+
+      <span v-if="item.punchline_text && item.punchline_text.length">
         {{ item.punchline_text }}
         <br />
       </span>
@@ -40,8 +64,7 @@
           </b-col>
 
           <b-col>
-            <b-badge class="intervention-badge dim-badge"
-                     >Interventions</b-badge>
+            <b-badge class="intervention-badge dim-badge">Interventions</b-badge>
             <ul>
               <li v-for="i in distinct(item.interventions)" :key="i">
                 {{ fixParens(i) }}
@@ -91,6 +114,11 @@
 export default {
   name: "Card",
   props: ['item'],
+  computed: {
+    registered_date: function() {
+      return window.moment(this.item.date_registered).format("LL")
+    }
+  },
   methods: {
    // https://stackoverflow.com/questions/26586753/javascript-add-missing-parentheses-in-string
     _fixParens: function(s, left, right) {
