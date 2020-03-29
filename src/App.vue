@@ -60,4 +60,8 @@ html {
 .push {
   margin-top: 60px;
 }
+body {
+  background-color: #fafafa !important;
+}
+
 </style>
