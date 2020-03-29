@@ -183,10 +183,11 @@ export default {
     }
     .article-type[data-article-type="trial registration"] {
       background-color: var(--cyan);
+    }
   }
 }
-
-
+.num-randomized {
+  cursor: pointer;
 }
 .result-card,
 .result-card * {
