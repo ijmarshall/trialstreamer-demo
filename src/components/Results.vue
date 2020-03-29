@@ -50,7 +50,12 @@
               <a
                 v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`"
                 target="_blank">{{ item.pmid }}</a>
+
               {{ item.citation }}
+              <a
+                v-if="item.dois[0]"
+                v-bind:href="`https://dx.doi.org/${item.dois[0]}`"
+                target="_blank">{{ item.dois[0] }}</a>
             </h6>
             <b-card-text>
               <span v-if="item.punchline_text.length">
