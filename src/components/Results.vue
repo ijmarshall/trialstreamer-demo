@@ -9,6 +9,7 @@
     <div v-else >
       <div v-if="sortedArticles.length > 0" >
         <p style="font-size: small; text-align: right;">
+          <b-icon-exclamation-triangle v-if="isTruncated" />
           Showing <span v-if="isTruncated">first 250 results only</span>
           <span v-else>{{ rows }} results</span>
         </p>
