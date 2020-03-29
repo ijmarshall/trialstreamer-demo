@@ -1,55 +1,66 @@
 <template>
-  <b-card
-    v-bind:title="item.ti"
-    class="result-card shadow-sm p-3 mb-5 bg-white rounded">
+<b-card
+  v-bind:title="item.ti"
+  class="result-card shadow-sm p-3 mb-5 bg-white rounded">
+
+  <div
+    v-if="item.article_type"
+    class="article-type">
+    {{ item.article_type }}
+  </div>
+
+  <h6 class="card-subtitle text-muted mb-2" v-if="item.article_type == 'preprint' ||  item.article_type == 'journal article'">
+    <a
+      v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`"
+      target="_blank">{{ item.pmid }}</a>
+    {{ item.citation }}
+    <a
+      v-if="item.dois && item.dois[0]"
+      v-bind:href="`https://dx.doi.org/${item.dois[0]}`"
+      target="_blank">{{ item.dois[0] }}</a>
+  </h6>
+
+  <h6 class="card-subtitle text-muted mb-2" v-else>
+    {{item.regid}}, {{item.is_recruiting}}, {{item.is_rct}}
+  </h6>
+
+
+  <b-card-text>
+    <div class="text-meta">
+    <span v-if="item.countries && item.countries.length">
+      Date Registered: {{registered_date}}
+      <br />
+      Study Countries: {{ item.countries.join(", ") }}
+      <br />
+    </span>
 
     <div
       v-if="item.num_randomized"
-      class="num-randomized"
-      v-b-tooltip.hover.right
-      title="Number of participants randomized, extracted using machine learning">
-      n={{ item.num_randomized }}
+      class="num-randomized">
+       <b-icon
+        v-b-tooltip.hover
+        title="Randomized participants; extracted using machine learning"
+        icon="shuffle"
+        font-scale="1" /> {{ item.num_randomized }}
     </div>
 
     <div
       v-if="item.target_size"
       class="num-randomized"
-      v-b-tooltip.hover.right
-      title="Target size of the trial, extracted using machine learning">
-      n={{ item.target_size }}
+      font-scale="1">
+       <b-icon
+        v-b-tooltip.hover
+        title="Target size; extracted using machine learning"
+        icon="shuffle"
+        font-scale="1" /> {{ item.target_size }}
     </div>
 
+    <blockquote v-if="item.punchline_text && item.punchline_text.length">
+      <p class="mb-0">{{ item.punchline_text }}</p>
+    </blockquote>
+    </div>
 
-    <h6 class="card-subtitle text-muted mb-2" v-if="item.article_type == 'preprint' ||  item.article_type == 'journal article'">
-      <a
-        v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`"
-        target="_blank">{{ item.pmid }}</a>
-      {{ item.citation }}
-      <a
-        v-if="item.dois && item.dois[0]"
-        v-bind:href="`https://dx.doi.org/${item.dois[0]}`"
-        target="_blank">{{ item.dois[0] }}</a>
-    </h6>
-
-    <h6 class="card-subtitle text-muted mb-2" v-else>
-      {{item.regid}}, {{item.is_recruiting}}, {{item.is_rct}}
-    </h6>
-
-
-    <b-card-text>
-      <span v-if="item.countries && item.countries.length">
-        <strong>Date Registered:</strong> {{registered_date}}
-        <br />
-        <strong>Study Countries:</strong> {{ item.countries.join(", ") }}
-        <br />
-      </span>
-
-      <span v-if="item.punchline_text && item.punchline_text.length">
-        {{ item.punchline_text }}
-        <br />
-      </span>
-
-      <b-container style="margin: 1em -15px 0 -15px;">
+    <b-container style="margin: 1em -15px 0 -15px;">
         <b-row>
           <b-col>
             <b-badge class="population-badge dim-badge">Population</b-badge>
@@ -120,7 +131,7 @@ export default {
     }
   },
   methods: {
-   // https://stackoverflow.com/questions/26586753/javascript-add-missing-parentheses-in-string
+    // https://stackoverflow.com/questions/26586753/javascript-add-missing-parentheses-in-string
     _fixParens: function(s, left, right) {
       var missedOpen = 0, missedClosed = 0;
       for (let i = 0; i < s.length; i++) {
@@ -135,7 +146,14 @@ export default {
       }
       return Array(missedOpen + 1).join(left) + s + Array(missedClosed + 1).join(right);
     },
+    stripHtml: function(html)
+    {
+      var tmp = document.createElement("DIV");
+      tmp.innerHTML = html;
+      return tmp.textContent || tmp.innerText || "";
+    },
     fixParens: function(s) {
+      s = this.stripHtml(s)
       let a = this._fixParens(s,"(", ")");
       let b = this._fixParens(a,"[","]");
       return b;
@@ -167,10 +185,6 @@ export default {
   color: #212529;
   background-color: #dae0e5;
 }
-.result-card:hover .num-randomized {
-  background-color: var(--info);
-  color: white;
-}
 .result-card:not(:hover) a {
   color: var(--dark);
 }
@@ -189,7 +203,7 @@ export default {
   background-color: var(--population-background);
 }
 
-.num-randomized {
+.article-type {
   color: #212529;
   background-color: #dae0e5;
   position: absolute;
@@ -201,6 +215,9 @@ export default {
   border-bottom-left-radius: 0.25rem;
   font-size: 75%;
 }
+
+
+
 .risk-of-bias {
   position: absolute;
   bottom: 0;
