@@ -12,9 +12,30 @@
           Showing <span v-if="isTruncated">first 250 results only</span>
           <span v-else>{{ rows }} results</span>
         </p>
+        <div class="d-flex">
         <b-button-toolbar
           style="margin-bottom: 2em"
-          class="justify-content-end">
+          class="mr-auto p-2"
+          >
+          <b-button-group>
+            <b-form-radio-group
+              
+              v-model="filterType"
+              name="radios-btn-component"
+              button-variant="light"
+              size="sm"
+              buttons
+              >        
+              <b-form-radio value="all">All ({{ rows }})</b-form-radio>
+              <b-form-radio value="journal article" :disabled="rowsPublications==0">Published articles ({{ rowsPublications }})</b-form-radio>
+              <b-form-radio value="preprint" :disabled="rowsPreprints==0">Preprints ({{ rowsPreprints }})</b-form-radio>
+              <b-form-radio value="trial registration" :disabled="rowsTrialRegistrations==0">Registered trials ({{ rowsTrialRegistrations}})</b-form-radio>
+          </b-form-radio-group>
+          </b-button-group>
+        </b-button-toolbar>
+        <b-button-toolbar
+          style="margin-bottom: 2em"
+          class="p-2">
           <b-button-group>
             <b-form-radio-group
               v-model="newestFirst"
@@ -34,6 +55,7 @@
             </b-button>
           </b-button-group>
         </b-button-toolbar>
+      </div>
 
         <Card
           v-for="item in sortedArticles"
@@ -82,6 +104,7 @@ export default {
       perPage: 25,
       currentPage: 1,
       newestFirst: true,
+      filterType: 'all',
       sortOptions: [
         {
           text: "Newest first",
@@ -90,9 +113,9 @@ export default {
         {
           text: "Oldest first",
           value: false,
-        },
+        },      
       ],
-    };
+  };
   },
   props: {},
   methods: {
@@ -121,10 +144,20 @@ export default {
       });
     },
   },
-  computed: {
+  computed: {    
     rows() {
       return this.$store.getters.getArticles.length;
     },
+    rowsPublications() {
+      return this.$store.getters.getArticles.filter(function(el) {return el.article_type=='journal article'}).length;
+    },
+    rowsPreprints() {
+      return this.$store.getters.getArticles.filter(function(el) {return el.article_type=='preprint'}).length;
+    },
+    rowsTrialRegistrations() {
+      return this.$store.getters.getArticles.filter(function(el) {return el.article_type=='trial registration'}).length;
+    },
+
     getLoadingArticles() {
       return this.$store.getters.getLoadingArticles;
     },
@@ -132,7 +165,13 @@ export default {
       return this.$store.getters.getTags;
     },
     getArticles() {
-      return this.$store.getters.getArticles;
+      let filterType = this.filterType;
+      // return this.$store.getters.getArticles.filter(function(el) {return el.article_type==filterType}).length;
+      if (this.filterType=='all') {
+        return this.$store.getters.getArticles;
+      } else {
+        return this.$store.getters.getArticles.filter(function(el) {return el.article_type==filterType});
+      }
     },
     isTruncated() {
       return this.$store.getters.getArticles.length >= 250;
@@ -140,16 +179,17 @@ export default {
     showExamples() {
       return !!this.$store.getters.getTags.length;
     },
-    sortedArticles() {
-      let newest = this.newestFirst;
+    sortedArticles() {      
+      let newest = this.newestFirst;      
       let sortFn = function (a, b) {
         if (newest) {
           return b.year - a.year;
         } else {
           return a.year - b.year;
         }
-      };
-      let result = this.$store.getters.getArticles.slice().sort(sortFn);
+      };      
+      let result = this.getArticles.slice().sort(sortFn);
+      
       return getPaginatedItems(result, this.currentPage, this.perPage);
     },
   },
