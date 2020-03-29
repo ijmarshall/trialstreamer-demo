@@ -6,13 +6,15 @@
       style="margin-top: 4rem;">
       <b-spinner type="grow" label="Loading..."></b-spinner>
     </div>
-    <div v-else>
-      <div v-if="sortedArticles.length > 0">
+    <div v-else >
+      <div v-if="sortedArticles.length > 0" >
         <p style="font-size: small; text-align: right;">
           Showing <span v-if="isTruncated">first 250 results only</span>
           <span v-else>{{ rows }} results</span>
         </p>
-        <b-button-toolbar class="justify-content-end">
+        <b-button-toolbar
+          style="margin-bottom: 2em"
+          class="justify-content-end">
           <b-button-group>
             <b-form-radio-group
               v-model="newestFirst"
@@ -158,7 +160,7 @@ export default {
 .results {
   margin-bottom: 2em;
 }
-.result-cards {
+.results .results-card:first-child {
   margin-top: 2em;
 }
 

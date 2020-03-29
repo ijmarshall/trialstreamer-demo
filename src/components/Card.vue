@@ -5,6 +5,7 @@
 
   <div
     v-if="item.article_type"
+    v-bind:data-article-type="item.article_type"
     class="article-type">
     {{ item.article_type }}
   </div>
@@ -166,10 +167,26 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .result-card {
   margin-top: 0;
   text-align: left;
+  &:hover {
+    .article-type {
+      color: white;
+    }
+    .article-type[data-article-type="journal article"] {
+      background-color: var(--blue);
+    }
+    .article-type[data-article-type="preprint"] {
+      background-color: var(--indigo);
+    }
+    .article-type[data-article-type="trial registration"] {
+      background-color: var(--cyan);
+  }
+}
+
+
 }
 .result-card,
 .result-card * {
@@ -215,8 +232,6 @@ export default {
   border-bottom-left-radius: 0.25rem;
   font-size: 75%;
 }
-
-
 
 .risk-of-bias {
   position: absolute;
