@@ -32,8 +32,8 @@ export default {
   watch: {
     tag: "initItems",
     $route(to) {
-      const tags = JSURL.parse(to.query.q);
-      if(tags !== this.tags) {
+      let tags = JSURL.parse(to.query.q) || [];
+      if(tags !== this.tags || !tags.length) {
         this.tags = tags.map((item) => ({
           classes: item.field,
           text: item.text,
