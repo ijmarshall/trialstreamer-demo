@@ -48,7 +48,6 @@ export default {
     let tags = JSURL.parse(this.$route.query.q);
     if(tags && tags.length) {
       this.$store.commit("updateTags", tags);
-      this.$store.commit("loadingArticles", true);
       this.tags = tags.map((item) => ({
         classes: item.field,
         text: item.text,
@@ -61,7 +60,7 @@ export default {
   methods: {
     fetch(tags) {
       let self = this;
-
+      this.$store.commit("loadingArticles", true);
       const url = `${process.env.VUE_APP_SERVER_URL}/picosearch`;
       axios
         .post(
