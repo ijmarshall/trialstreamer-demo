@@ -16,6 +16,7 @@
 <script>
 import VueTagsInput from "@johmun/vue-tags-input";
 import axios from "axios";
+import JSURL from "jsurl";
 export default {
   name: "SearchBox",
   components: {
@@ -30,13 +31,35 @@ export default {
   },
   watch: {
     tag: "initItems",
+    $route(to) {
+      const tags = JSURL.parse(to.query.q);
+      if(tags !== this.tags) {
+        this.tags = tags.map((item) => ({
+          classes: item.field,
+          text: item.text,
+          mesh_ui: item.mesh_ui,
+        }));
+        this.$store.commit("updateTags", this.tags);
+      }
+      this.fetch(tags);
+    }
+  },
+  beforeMount() {
+    let tags = JSURL.parse(this.$route.query.q);
+    if(tags && tags.length) {
+      this.$store.commit("updateTags", tags);
+      this.$store.commit("loadingArticles", true);
+      this.tags = tags.map((item) => ({
+        classes: item.field,
+        text: item.text,
+        mesh_ui: item.mesh_ui,
+      }));
+
+      this.fetch(tags);
+     }
   },
   methods: {
-    update(newTags) {
-      this.autocompleteItems = [];
-      this.tags = newTags;
-      this.$store.commit("updateTags", newTags);
-      this.$store.commit("loadingArticles", true);
+    fetch(tags) {
       let self = this;
 
       const url = `${process.env.VUE_APP_SERVER_URL}/picosearch`;
@@ -44,10 +67,7 @@ export default {
         .post(
           url,
           {
-            terms: newTags.map((item) => ({
-              field: item.classes,
-              mesh_ui: item.mesh_ui,
-            })),
+            terms: tags
           },
           { headers: { "api-key": process.env.VUE_APP_API_KEY } }
         )
@@ -59,6 +79,16 @@ export default {
           console.warn("The query didn't work");
           self.$store.commit("loadingArticles", false);
         });
+    },
+    update(newTags) {
+      this.autocompleteItems = [];
+      let tags = newTags.map((item) => ({
+        field: item.classes,
+        text: item.text,
+        mesh_ui: item.mesh_ui,
+      }))
+
+      this.$router.push({ name: 'search', query: { q: JSURL.stringify(tags) }});
     },
     initItems() {
       if (this.tag.length < 2) return;

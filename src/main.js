@@ -1,6 +1,8 @@
 import '@babel/polyfill'
 import 'mutationobserver-shim'
 import Vue from 'vue'
+import VueRouter from 'vue-router'
+
 import VueLodash from 'vue-lodash'
 import lodash from 'lodash'
 
@@ -16,6 +18,7 @@ Vue.use(Vuex)
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(VueLodash, { lodash: lodash })
+Vue.use(VueRouter)
 
 Vue.config.productionTip = false
 
@@ -49,8 +52,31 @@ const store = new Vuex.Store({
   },
 })
 
+import About from "./pages/About.vue";
+import Search from "./pages/Search.vue";
+
+
+// 2. Define some routes
+// Each route should map to a component. The "component" can
+// either be an actual component constructor created via
+// `Vue.extend()`, or just a component options object.
+// We'll talk about nested routes later.
+const routes = [
+  { path: '/', component: Search, name: 'search'},
+  { path: '/about', component: About, name: 'about' }
+]
+
+// 3. Create the router instance and pass the `routes` option
+// You can pass in additional options here, but let's
+// keep it simple for now.
+const router = new VueRouter({
+  mode: 'history',
+  routes // short for `routes: routes`
+})
+
 
 new Vue({
   render: h => h(App),
   store,
+  router
 }).$mount('#app')

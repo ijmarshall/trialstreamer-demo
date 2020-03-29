@@ -1,23 +1,17 @@
 <template>
-  <div id="app" class="container">
-    <Title />
-    <SearchBox />
-    <Results />
+<div id="app">
+  <Title />
+   <div class="container push">
+    <router-view></router-view>
   </div>
+</div>
 </template>
 
 <script>
 import Title from "./components/Title.vue";
-import SearchBox from "./components/SearchBox.vue";
-import Results from "./components/Results.vue";
-
 export default {
   name: "app",
-  components: {
-    Title,
-    SearchBox,
-    Results,
-  },
+  components: {Title}
 };
 
 </script>
@@ -63,9 +57,7 @@ export default {
 html {
   overflow-y: scroll;
 }
-#app {
-  text-align: center;
-  color: #2c3e50;
+.push {
   margin-top: 60px;
 }
 </style>

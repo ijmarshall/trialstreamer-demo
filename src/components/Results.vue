@@ -130,7 +130,7 @@
           <strong>No results</strong>
         </div>
         <div v-else>
-          Examples
+          <Examples />
         </div>
       </div>
     </div>
@@ -139,6 +139,7 @@
 
 <script>
 import axios from "axios";
+import Examples from "./Examples.vue";
 
 function getPaginatedItems(items, page, pageSize) {
   var pg = page || 1,
@@ -150,6 +151,7 @@ function getPaginatedItems(items, page, pageSize) {
 
 export default {
   name: "Results",
+  components: { Examples },
   data() {
     return {
       perPage: 25,

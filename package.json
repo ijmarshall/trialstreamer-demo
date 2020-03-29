@@ -16,9 +16,11 @@
     "axios": "^0.19.0",
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.4.3",
+    "jsurl": "^0.1.5",
     "lodash": "^4.17.15",
     "vue": "^2.6.10",
     "vue-lodash": "^2.1.2",
+    "vue-router": "^3.1.6",
     "vuex": "^3.1.2"
   },
   "devDependencies": {

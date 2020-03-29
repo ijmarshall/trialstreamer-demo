@@ -1,11 +1,24 @@
 <template>
-  <div class="Header">
-    <h1>Trialstreamer</h1>
-    <p>
-      A living, annotated database of {{stats.num_rcts}} randomized controlled trials.
-      <span>Last updated {{ago}}</span>
-    </p>
-  </div>
+  <b-navbar toggleable="sm">
+    <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
+
+    <b-navbar-brand to="/" >Trialstreamer</b-navbar-brand>
+
+    <b-collapse id="nav-text-collapse" is-nav>
+      <b-navbar-nav class="mr-auto">
+        <b-nav-text>
+          A living, annotated database of {{stats.num_rcts}} randomized controlled trials.
+          <span>Last updated {{ago}}</span>
+        </b-nav-text>
+
+      </b-navbar-nav>
+        <b-navbar-nav class="ml-auto ">
+          <b-nav-item :to="{path: '/', query: {}}" right>Home</b-nav-item>
+          <b-nav-item to="/about" right>About</b-nav-item>
+        </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
+
 </template>
 
 <script>
