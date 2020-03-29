@@ -51,7 +51,7 @@
       font-scale="1">
        <b-icon
         v-b-tooltip.hover
-        title="Target size; extracted using machine learning"
+        title="Target size; from the trial registry."
         icon="shuffle"
         font-scale="1" /> {{ item.target_size }}
     </div>
