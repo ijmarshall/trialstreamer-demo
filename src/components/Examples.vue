@@ -1,8 +1,7 @@
 <template>
 <div>
-Example <router-link :to="{path: '/', query: {q: example1}}">Hey</router-link>
-
-  </div>
+  Example <router-link :to="{path: '/', query: {q: example1}}">Hey</router-link>
+</div>
 </template>
 
 

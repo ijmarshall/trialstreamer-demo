@@ -7,7 +7,7 @@
     <b-collapse id="nav-text-collapse" is-nav>
       <b-navbar-nav class="mr-auto">
         <b-nav-text>
-          A living, annotated database of {{stats.num_rcts}} randomized controlled trials.
+          a living, annotated database of {{stats.num_rcts}} randomized controlled trials.
           <span>Last updated {{ago}}</span>
         </b-nav-text>
 

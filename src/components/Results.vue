@@ -32,97 +32,14 @@
             </b-button>
           </b-button-group>
         </b-button-toolbar>
-        <div
+
+        <Card
           v-for="item in sortedArticles"
           :key="item.pmid"
+          v-bind:item="item"
           class="result-cards">
-          <b-card
-            v-bind:title="item.ti"
-            class="result-card shadow-sm p-3 mb-5 bg-white rounded">
-            <div
-              v-if="item.num_randomized"
-              class="num-randomized"
-              v-b-tooltip.hover.right
-              title="Number of participants randomized, extracted using machine learning">
-              n={{ item.num_randomized }}
-            </div>
-            <h6 class="card-subtitle text-muted mb-2">
-              <a
-                v-bind:href="`https://www.ncbi.nlm.nih.gov/pubmed/${item.pmid}`"
-                target="_blank">{{ item.pmid }}</a>
+        </Card>
 
-              {{ item.citation }}
-              <a
-                v-if="item.dois[0]"
-                v-bind:href="`https://dx.doi.org/${item.dois[0]}`"
-                target="_blank">{{ item.dois[0] }}</a>
-            </h6>
-            <b-card-text>
-              <span v-if="item.punchline_text.length">
-                {{ item.punchline_text }}
-                <br />
-              </span>
-
-              <b-container style="margin: 1em -15px 0 -15px;">
-                <b-row>
-                  <b-col>
-                    <b-badge class="population-badge dim-badge">Population</b-badge>
-                    <ul>
-                      <li v-for="p in distinct(item.population)" :key="p">
-                        {{ fixParens(p) }}
-                      </li>
-                      <li v-if="!item.population.length">
-                        <em>None extracted</em>
-                      </li>
-                    </ul>
-                  </b-col>
-
-                  <b-col>
-                    <b-badge class="intervention-badge dim-badge"
-                      >Interventions</b-badge>
-                    <ul>
-                      <li v-for="i in distinct(item.interventions)" :key="i">
-                        {{ fixParens(i) }}
-                      </li>
-                      <li v-if="!item.interventions.length">
-                        <em>None extracted</em>
-                      </li>
-                    </ul>
-                  </b-col>
-
-                  <b-col>
-                    <b-badge class="outcome-badge dim-badge">Outcomes</b-badge>
-                    <ul>
-                      <li v-for="o in distinct(item.outcomes)" :key="o">
-                        {{ fixParens(o) }}
-                      </li>
-                      <li v-if="!item.outcomes.length">
-                        <em>None extracted</em>
-                      </li>
-                    </ul>
-                  </b-col>
-                </b-row>
-                <div
-                  class="risk-of-bias"
-                  v-b-tooltip.hover.right
-                  title="As determined by RobotReviewer based on the abstract text">
-                  <div>
-                    <span>Allocation concealment: </span>
-                    <span v-bind:data-bias="item.low_ac_bias ? 'l' : 'h'">{{item.low_ac_bias ? "low" : "high/unknown"}}</span>
-                  </div>
-                  <div>
-                    <span>Blinding of participants and personnel: </span>
-                    <span v-bind:data-bias="item.low_bpp_bias ? 'l' : 'h'">{{item.low_bpp_bias ? "low" : "high/unknown"}}</span>
-                  </div>
-                  <div>
-                    <span>Random sequence generation: </span>
-                    <span v-bind:data-bias="item.low_rcg_bias ? 'l' : 'h'">{{item.low_rcg_bias ? "low" : "high/unknown"}}</span>
-                  </div>
-                </div>
-              </b-container>
-            </b-card-text>
-          </b-card>
-        </div>
         <div class="d-flex justify-content-center">
           <b-pagination
             v-model="currentPage"
@@ -145,6 +62,7 @@
 <script>
 import axios from "axios";
 import Examples from "./Examples.vue";
+import Card from "./Card.vue";
 
 function getPaginatedItems(items, page, pageSize) {
   var pg = page || 1,
@@ -156,7 +74,7 @@ function getPaginatedItems(items, page, pageSize) {
 
 export default {
   name: "Results",
-  components: { Examples },
+  components: { Examples, Card },
   data() {
     return {
       perPage: 25,
@@ -176,26 +94,7 @@ export default {
   },
   props: {},
   methods: {
-    // https://stackoverflow.com/questions/26586753/javascript-add-missing-parentheses-in-string
-    fixParens: function(s) {
-      var missedOpen = 0, missedClosed = 0;
-      for (let i = 0; i < s.length; i++) {
-        if (s[i] == '(') {
-          missedClosed++;
-        } else if (s[i] == ')') {
-          if (missedClosed > 0)
-            missedClosed--;
-          else
-            missedOpen++;
-        }
-      }
-      return Array(missedOpen + 1).join('(') + s + Array(missedClosed + 1).join(')');
-    },
-    distinct: function (strs) {
-      let d = new Map(strs.map((s) => [s.toLowerCase(), s]));
-      return [...d.values()];
-    },
-    download: function () {
+     download: function () {
       axios({
         url: `${process.env.VUE_APP_SERVER_URL}/picosearch`,
         method: "POST",
@@ -262,76 +161,5 @@ export default {
 .result-cards {
   margin-top: 2em;
 }
-.result-card {
-  margin-top: 0;
-  text-align: left;
-}
-.result-card,
-.result-card * {
-  transition: all 0.125s ease !important;
-}
-.result-card .dim-badge {
-  transition: initial;
-}
-.result-card:hover {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-}
-.result-card:not(:hover) .dim-badge {
-  color: #212529;
-  background-color: #dae0e5;
-}
-.result-card:hover .num-randomized {
-  background-color: var(--info);
-  color: white;
-}
-.result-card:not(:hover) a {
-  color: var(--dark);
-}
-.result-card:hover .risk-of-bias {
-  color: #212529;
-  background-color: #dae0e5;
-}
 
-.intervention-badge {
-  background-color: var(--intervention-background);
-}
-.outcome-badge {
-  background-color: var(--outcome-background);
-}
-.population-badge {
-  background-color: var(--population-background);
-}
-
-.num-randomized {
-  color: #212529;
-  background-color: #dae0e5;
-  position: absolute;
-  right: 0;
-  top: 0;
-  min-width: 3em;
-  text-align: center;
-  padding: 0 1em;
-  border-bottom-left-radius: 0.25rem;
-  font-size: 75%;
-}
-.risk-of-bias {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 0 0.5em 0.5em 0.5em;
-  color: var(--gray);
-  text-align: right;
-  border-top-left-radius: 0.25rem;
-  font-size: 75%;
-}
-.risk-of-bias > div {
-  display: inline-block;
-  margin-left: 1em;
-}
-.risk-of-bias > div span:first-child {
-  font-weight: bolder;
-}
-.result-card:hover .risk-of-bias span[data-bias="l"] {
-  color: var(--green);
-}
 </style>
