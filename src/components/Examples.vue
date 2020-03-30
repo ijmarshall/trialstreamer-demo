@@ -10,25 +10,29 @@
         <li><router-link :to="{path: '/', query: {q: example4}}">What trials are underway on the use of Extracorporeal Membrane Oxygenation (ECMO) in COVID-19?</router-link></li>
       </ul>
 
-      <b-container fluid class="p-4">
-        <b-row><p class="lead">A collaboration between:</p></b-row>
+      <b-container>
         <b-row>
-          <b-col>
+          <b-col  xs="1" md="3">
+            <p class="lead">A collaboration between:</p>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col  xs="1" md="3">
             <b-link href="https://www.kcl.ac.uk/">
               <b-img thumbnail fluid width="250px" src="@/assets/kings.jpg" alt="King's College London"></b-img>
             </b-link>
           </b-col>
-          <b-col>
+          <b-col  xs="1" md="3">
             <b-link href="https://www.northeastern.edu/">
               <b-img thumbnail fluid width="250px" src="@/assets/northeastern.png" alt="Northeastern University"></b-img>
             </b-link>
           </b-col>
-          <b-col>
+          <b-col  xs="1" md="3">
             <b-link href="https://vortext.systems/">
               <b-img thumbnail fluid width="250px" src="@/assets/vortext.png" alt="Vortext Systems"></b-img>
             </b-link>
           </b-col>
-          <b-col>
+          <b-col  xs="1" md="3">
             <b-link href="https://www.robotreviewer.net/">
               <b-img thumbnail fluid width="250px" src="@/assets/logo.svg" alt="powered by RobotReviewer"></b-img>
             </b-link>
