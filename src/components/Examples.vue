@@ -7,6 +7,25 @@
       <li><router-link :to="{path: '/', query: {q: example3}}">Do chloroquine or hydroxychloroquine improve outcomes in COVID-19 infection?</router-link></li>
       <li><router-link :to="{path: '/', query: {q: example4}}">What trials are underway on the use of Extracorporeal Membrane Oxygenation (ECMO) in COVID-19?</router-link></li>
     </ul>
+
+    <b-container fluid class="p-4">
+      <b-row>A collaboration between:</b-row>
+        <b-row>
+          <b-col>
+            <b-img thumbnail fluid width="250px" src="@/assets/kings.jpg" alt="King's College London"></b-img>
+          </b-col>
+          <b-col>
+            <b-img thumbnail fluid width="250px" src="@/assets/northeastern.png" alt="Northeastern University"></b-img>
+          </b-col>
+          <b-col>
+            <b-img thumbnail fluid width="250px" src="@/assets/vortext.png" alt="Vortext Systems"></b-img>
+          </b-col>
+          <b-col>
+            <b-img thumbnail fluid width="250px" src="@/assets/logo.svg" alt="powered by RobotReviewer"></b-img>
+          </b-col>
+
+  </b-row>
+</b-container>
 </div>
 </template>
 
