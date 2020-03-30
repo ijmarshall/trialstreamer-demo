@@ -84,8 +84,8 @@ export default {
           this.$store.commit("updateArticles", response.data);
         })
         .catch(function (e) {
-          self.error = e;
-          console.warn("The query didn't work");
+          self.error = e.toString();
+          console.error(e.stack);
         })
         .finally(function() {
           self.$store.commit("loadingArticles", false);
@@ -119,8 +119,8 @@ export default {
             }));
           })
           .catch(function(e) {
-            self.error = e;
-            console.warn("Oh. Something went wrong", e);
+            self.error = e.toString();
+            console.error(e.stack);
           })
           .finally(() => this.loading = false);
       }, 250);
