@@ -63,7 +63,7 @@
 
     <b-container style="margin: 1em -15px 0 -15px;">
         <b-row>
-          <b-col>
+          <b-col xs="1" md="4">
             <b-badge class="population-badge dim-badge">Population</b-badge>
             <ul>
               <li v-for="p in distinct(item.population)" :key="p">
@@ -75,7 +75,7 @@
             </ul>
           </b-col>
 
-          <b-col>
+          <b-col xs="1" md="4">
             <b-badge class="intervention-badge dim-badge">Interventions</b-badge>
             <ul>
               <li v-for="i in distinct(item.interventions)" :key="i">
@@ -87,7 +87,7 @@
             </ul>
           </b-col>
 
-          <b-col>
+          <b-col xs="1" md="4">
             <b-badge class="outcome-badge dim-badge">Outcomes</b-badge>
             <ul>
               <li v-for="o in distinct(item.outcomes)" :key="o">
@@ -193,6 +193,11 @@ export default {
 .result-card * {
   transition: all 0.125s ease !important;
 }
+.result-card .col:last-child {
+  margin-bottom: 1em;
+}
+
+
 .result-card .dim-badge {
   transition: initial;
 }

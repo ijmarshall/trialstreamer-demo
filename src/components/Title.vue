@@ -9,7 +9,7 @@
 
     <b-collapse id="nav-text-collapse" is-nav>
       <b-navbar-nav class="mr-auto">
-        <b-nav-text class="font-weight-light">
+        <b-nav-text class="font-weight-light" style="margin-top: -3px">
           a living, annotated database of {{stats.num_rcts}} randomized controlled trials.
           <span>Last updated {{ago}}.</span>
         </b-nav-text>

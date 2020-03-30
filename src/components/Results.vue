@@ -204,5 +204,4 @@ export default {
 .results .results-card:first-child {
   margin-top: 2em;
 }
-
 </style>
