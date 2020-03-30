@@ -20,13 +20,13 @@
           >
           <b-button-group>
             <b-form-radio-group
-              
+
               v-model="filterType"
               name="radios-btn-component"
               button-variant="light"
               size="sm"
               buttons
-              >        
+              >
               <b-form-radio value="all">All ({{ rows }})</b-form-radio>
               <b-form-radio value="journal article" :disabled="rowsPublications==0">Published articles ({{ rowsPublications }})</b-form-radio>
               <b-form-radio value="preprint" :disabled="rowsPreprints==0">Preprints ({{ rowsPreprints }})</b-form-radio>
@@ -114,7 +114,7 @@ export default {
         {
           text: "Oldest first",
           value: false,
-        },      
+        },
       ],
   };
   },
@@ -145,9 +145,9 @@ export default {
       });
     },
   },
-  computed: {    
+  computed: {
     rows() {
-      return this.$store.getters.getArticles.length;
+      return this.getArticles.length;
     },
     rowsPublications() {
       return this.$store.getters.getArticles.filter(function(el) {return el.article_type=='journal article'}).length;
@@ -180,17 +180,17 @@ export default {
     showExamples() {
       return !!this.$store.getters.getTags.length;
     },
-    sortedArticles() {      
-      let newest = this.newestFirst;      
+    sortedArticles() {
+      let newest = this.newestFirst;
       let sortFn = function (a, b) {
         if (newest) {
           return b.year - a.year;
         } else {
           return a.year - b.year;
         }
-      };      
+      };
       let result = this.getArticles.slice().sort(sortFn);
-      
+
       return getPaginatedItems(result, this.currentPage, this.perPage);
     },
   },
