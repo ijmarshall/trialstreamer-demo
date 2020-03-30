@@ -116,9 +116,16 @@ export default {
           value: false,
         },
       ],
-  };
+    };
   },
   props: {},
+  watch: {
+    getArticles(to, from) {
+      if(!this._.isEqual(to, from)) {
+        this.currentPage = 1;
+      }
+    }
+  },
   methods: {
      download: function () {
       axios({
