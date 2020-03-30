@@ -16,7 +16,6 @@
 
       </b-navbar-nav>
         <b-navbar-nav class="ml-auto ">
-          <b-nav-item :to="{path: '/', query: {}}" right>Home</b-nav-item>
           <b-nav-item to="/about" right>About</b-nav-item>
         </b-navbar-nav>
     </b-collapse>
