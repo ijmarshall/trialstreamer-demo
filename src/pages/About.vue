@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid="xs">
+  <b-container fluid="xs"  class="shadow-sm p-4 bg-white rounded">
     <h1>What is Trialstreamer?</h1>
 
     <p>Randomized controlled trials (RCTs) are the most reliable way to determine whether treatments in healthcare work or not. But there are hundreds of thousands of these studies, with more published every day. Keeping abreast of this vast volume is now impossible for health professionals. Even professional reviewers of research and information specialists can take weeks or even years to evaluate the evidence for a treatment.</p>

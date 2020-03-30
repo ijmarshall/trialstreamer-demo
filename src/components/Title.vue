@@ -2,13 +2,16 @@
   <b-navbar toggleable="sm">
     <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
-    <b-navbar-brand to="/" >Trialstreamer</b-navbar-brand>
+    <b-navbar-brand to="/" >
+
+       <img src="@/assets/logo.png" class="d-inline-block align-top" alt="Kitten" height="64">
+    </b-navbar-brand>
 
     <b-collapse id="nav-text-collapse" is-nav>
       <b-navbar-nav class="mr-auto">
-        <b-nav-text>
+        <b-nav-text class="font-weight-light">
           a living, annotated database of {{stats.num_rcts}} randomized controlled trials.
-          <span>Last updated {{ago}}</span>
+          <span>Last updated {{ago}}.</span>
         </b-nav-text>
 
       </b-navbar-nav>

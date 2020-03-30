@@ -20,13 +20,11 @@
           >
           <b-button-group>
             <b-form-radio-group
-
               v-model="filterType"
               name="radios-btn-component"
               button-variant="light"
               size="sm"
-              buttons
-              >
+              buttons>
               <b-form-radio value="all">All ({{ rowsAll }})</b-form-radio>
               <b-form-radio value="journal article" :disabled="rowsPublications==0">Published articles ({{ rowsPublications }})</b-form-radio>
               <b-form-radio value="preprint" :disabled="rowsPreprints==0">Preprints ({{ rowsPreprints }})</b-form-radio>
@@ -73,7 +71,7 @@
         </div>
       </div>
       <div v-else class="result-cards">
-        <div v-if="showExamples">
+        <div v-if="showExamples" style="text-align: center; margin-top: 2em">
           <strong>No results</strong>
         </div>
         <div v-else>
