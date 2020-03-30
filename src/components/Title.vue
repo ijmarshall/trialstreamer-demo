@@ -3,8 +3,7 @@
     <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
     <b-navbar-brand to="/" >
-
-       <img src="@/assets/logo.png" class="d-inline-block align-top" alt="Kitten" height="64">
+       <img src="@/assets/logo.png" class="d-inline-block align-top"  height="54">
     </b-navbar-brand>
 
     <b-collapse id="nav-text-collapse" is-nav>

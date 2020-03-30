@@ -4,8 +4,8 @@
     <div v-if="getLoadingArticles"
          key="loading"
          class="d-flex justify-content-center"
-         style="margin-top: 4rem; z-index:100">
-      <b-img src="@/assets/loading.gif" style="opacity: 0.20; width: 33%; filter: blur(1px)" />
+         style="margin-top: 4rem; z-index:100; width: 100%">
+      <b-img src="@/assets/loading.gif" style="opacity: 0.20; filter: blur(1px)" width="320"/>
     </div>
     <div v-else key="results">
       <div v-if="sortedArticles.length > 0" >
@@ -14,48 +14,51 @@
           Showing <span v-if="isTruncated">first 250 results only</span>
           <span v-else>{{ rows }} results</span>
         </p>
-        <div class="d-flex">
-          <b-button-toolbar
-            style="margin-bottom: 2em"
-            class="mr-auto p-2"
-            >
-            <b-button-group>
-              <b-form-radio-group
-                v-model="filterType"
-                name="radios-btn-component"
-                button-variant="light"
-                size="sm"
-                buttons>
-                <b-form-radio value="all">All ({{ rowsAll }})</b-form-radio>
-                <b-form-radio value="journal article" :disabled="rowsPublications==0">Published articles ({{ rowsPublications }})</b-form-radio>
-                <b-form-radio value="preprint" :disabled="rowsPreprints==0">Preprints ({{ rowsPreprints }})</b-form-radio>
-                <b-form-radio value="trial registration" :disabled="rowsTrialRegistrations==0">Registered trials ({{ rowsTrialRegistrations}})</b-form-radio>
-              </b-form-radio-group>
-            </b-button-group>
-          </b-button-toolbar>
-          <b-button-toolbar
-            style="margin-bottom: 2em"
-            class="p-2">
-            <b-button-group>
-              <b-form-radio-group
-                v-model="newestFirst"
-                :options="sortOptions"
-                button-variant="light"
-                size="sm"
-                buttons
-                name="radios-btn-default">
-              </b-form-radio-group>
-              <b-button
-                v-bind:disabled="rows == 0"
-                v-on:click="download"
-                size="sm"
-                v-b-tooltip.hover
-                title="Download citations">
-                <b-icon icon="cloud-download"></b-icon>
-              </b-button>
-            </b-button-group>
-          </b-button-toolbar>
-        </div>
+        <container flex>
+          <b-row>
+            <b-col cols="auto" class="mr-auto">
+              <b-button-toolbar
+                style="margin-bottom: 2em">
+                <b-button-group>
+                  <b-form-radio-group
+                    v-model="filterType"
+                    name="radios-btn-component"
+                    button-variant="light"
+                    size="sm"
+                    buttons>
+                    <b-form-radio value="all">All ({{ rowsAll }})</b-form-radio>
+                    <b-form-radio value="journal article" :disabled="rowsPublications==0">Published articles ({{ rowsPublications }})</b-form-radio>
+                    <b-form-radio value="preprint" :disabled="rowsPreprints==0">Preprints ({{ rowsPreprints }})</b-form-radio>
+                    <b-form-radio value="trial registration" :disabled="rowsTrialRegistrations==0">Registered trials ({{ rowsTrialRegistrations}})</b-form-radio>
+                  </b-form-radio-group>
+                </b-button-group>
+              </b-button-toolbar>
+            </b-col>
+            <b-col cols="auto">
+              <b-button-toolbar
+                style="margin-bottom: 2em">
+                <b-button-group>
+                  <b-form-radio-group
+                    v-model="newestFirst"
+                    :options="sortOptions"
+                    button-variant="light"
+                    size="sm"
+                    buttons
+                    name="radios-btn-default">
+                  </b-form-radio-group>
+                  <b-button
+                    v-bind:disabled="rows == 0"
+                    v-on:click="download"
+                    size="sm"
+                    v-b-tooltip.hover
+                    title="Download citations">
+                    <b-icon icon="cloud-download"></b-icon>
+                  </b-button>
+                </b-button-group>
+              </b-button-toolbar>
+            </b-col>
+          </b-row>
+        </container>
 
         <Card
           v-for="item in sortedArticles"
