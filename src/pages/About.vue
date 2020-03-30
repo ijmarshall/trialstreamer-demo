@@ -13,7 +13,7 @@
 
     <p>Trialstreamer is made by the international academic collaboration behind <a href="https://robotreviewer.net">RobotReviewer</a>. The research is jointly led by Iain Marshall (King's College London) and Byron Wallace (Northeastern University), with critical contributions from Joël Kuiper (Vortext Systems, Netherlands), Ben Nye (Northeastern), and Frank Soboczenski (King's).</p>
 
-    <p>There are very many other collaborators and graduate students who contribute to the effort. We acknowledge in particular Ani Nenkova and Zachary Ives (UPenn), Tom Trikalinos and team (Brown), James Thomas (EPPI Centre, UCL), Anna Noel-Storr (University of Oxford and Cochrane Dementia), Rachel Marshall (Cochrane), and Randolph Bias (University of Texas at Austin).</p>
+    <p>There are very many other collaborators and graduate students who contribute to the effort. We acknowledge in particular Ani Nenkova and Zachary Ives (UPenn), Tom Trikalinos and team (Brown), James Thomas (EPPI Centre, UCL), Anna Noel-Storr (University of Oxford and Cochrane Dementia), Rachel Marshall (Cochrane), Gert van Valkenhoef (Cochrane), Randolph Bias (University of Texas at Austin).</p>
 
     <p>We are enormously grateful for the support of very many people and groups who have generously allowed us use of their data to train and evaluate our systems. In particular, we would like to express our gratitude to Cochrane. We are hugely appreciative to the volunteers and team behind the Cochrane Crowd, whose efforts and data were fundamental to creating our RCT detection system.</p>
 
