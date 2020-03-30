@@ -1,16 +1,25 @@
 <template>
-  <div class="search">
-    <vue-tags-input
-      v-model="tag"
-      :tags="tags"
-      :autocomplete-items="autocompleteItems"
-      :add-only-from-autocomplete="true"
-      placeholder="Start typing MeSH terms..."
-      @tags-changed="update"
-      debounce="500"
-      style="max-width: none;"
+<div class="search">
+  <vue-tags-input
+    v-model="tag"
+    :tags="tags"
+    :autocomplete-items="autocompleteItems"
+    :add-only-from-autocomplete="true"
+    placeholder="Start typing MeSH terms..."
+    @tags-changed="update"
+    style="max-width: none;"
     />
+  <div class="loading">
+    <b-spinner
+      v-if="loading"
+      small
+      label="Loading"
+      variant="secondary"/>
   </div>
+  <b-alert v-if="error" show dismissible variant="danger" style="margin-top: 1em">
+    {{error}}
+  </b-alert>
+</div>
 </template>
 
 <script>
@@ -27,6 +36,9 @@ export default {
       tag: "",
       tags: [],
       autocompleteItems: [],
+      debounce: null,
+      loading: false,
+      error: null
     };
   },
   watch: {
@@ -55,7 +67,7 @@ export default {
       }));
 
       this.fetch(tags);
-     }
+    }
   },
   methods: {
     fetch(tags) {
@@ -65,19 +77,20 @@ export default {
       axios
         .post(
           url,
-          {
-            terms: tags
-          },
+          { terms: tags },
           { headers: { "api-key": process.env.VUE_APP_API_KEY } }
         )
         .then((response) => {
           this.$store.commit("updateArticles", response.data);
-          this.$store.commit("loadingArticles", false);
         })
-        .catch(function () {
+        .catch(function (e) {
+          self.error = e;
           console.warn("The query didn't work");
+        })
+        .finally(function() {
           self.$store.commit("loadingArticles", false);
         });
+
     },
     update(newTags) {
       this.autocompleteItems = [];
@@ -85,23 +98,32 @@ export default {
         field: item.classes,
         text: item.text,
         mesh_ui: item.mesh_ui,
-      }))
+      }));
 
       this.$router.push({ name: 'search', query: { q: JSURL.stringify(tags) }});
     },
     initItems() {
       if (this.tag.length < 2) return;
-      const url = `${process.env.VUE_APP_SERVER_URL}/autocomplete?q=${this.tag}`;
-      axios
-        .get(url, { headers: { "api-key": process.env.VUE_APP_API_KEY } })
-        .then((response) => {
-          this.autocompleteItems = response.data.map((item) => ({
-            classes: item.field,
-            text: item.mesh_pico_display,
-            mesh_ui: item.mesh_ui,
-          }));
-        })
-        .catch(() => console.warn("Oh. Something went wrong"));
+      const url = `${process.env.VUE_APP_SERVER_URL}/autocomplete?q=${this.tag.toLowerCase()}`;
+      clearTimeout(this.debounce);
+      this.loading = true;
+      let self = this;
+      this.debounce = setTimeout(() => {
+        axios
+          .get(url, { headers: { "api-key": process.env.VUE_APP_API_KEY } })
+          .then((response) => {
+            this.autocompleteItems = response.data.map((item) => ({
+              classes: item.field,
+              text: item.mesh_pico_display,
+              mesh_ui: item.mesh_ui,
+            }));
+          })
+          .catch(function(e) {
+            self.error = e;
+            console.warn("Oh. Something went wrong", e);
+          })
+          .finally(() => this.loading = false);
+      }, 250);
     },
   },
 };
@@ -109,7 +131,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.loading {
+  position: absolute;
+  right: 1em;
+  top: 5px;
+  opacity: 0.5;
+
+}
 .search {
+  position: relative;
   margin: 0 auto;
 }
 
