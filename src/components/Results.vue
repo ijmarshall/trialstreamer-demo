@@ -5,7 +5,7 @@
          key="loading"
          class="d-flex justify-content-center"
          style="margin-top: 4rem; z-index:100; width: 100%">
-      <b-img src="@/assets/loading.gif" style="opacity: 0.20; filter: blur(1px)" width="320"/>
+      <b-img src="@/assets/loading.gif" class="loading-img" style="opacity: 0.2; filter: blur(1px);" />
     </div>
     <div v-else key="results">
       <div v-if="sortedArticles.length > 0" >
@@ -216,6 +216,10 @@ export default {
   margin-top: 2em;
 }
 
+.load-img {
+  object-fit: cover;
+  width: 100%;
+}
 .fade-enter-active, .fade-leave-active {
   transition: opacity .125s;
 }
