@@ -1,12 +1,13 @@
 <template>
-  <div class="results">
-    <div
-      v-if="getLoadingArticles"
-      class="d-flex justify-content-center"
-      style="margin-top: 4rem;">
-      <b-spinner type="grow" label="Loading..."></b-spinner>
+<div class="results">
+  <transition name="fade" mode="out-in">
+    <div v-if="getLoadingArticles"
+         key="loading"
+         class="d-flex justify-content-center"
+         style="margin-top: 4rem; z-index:100">
+      <b-img src="@/assets/loading.gif" style="opacity: 0.20; width: 33%; filter: blur(1px)" />
     </div>
-    <div v-else >
+    <div v-else key="results">
       <div v-if="sortedArticles.length > 0" >
         <p style="font-size: small; text-align: right;">
           <b-icon-exclamation-triangle v-if="isTruncated" />
@@ -14,47 +15,47 @@
           <span v-else>{{ rows }} results</span>
         </p>
         <div class="d-flex">
-        <b-button-toolbar
-          style="margin-bottom: 2em"
-          class="mr-auto p-2"
-          >
-          <b-button-group>
-            <b-form-radio-group
-              v-model="filterType"
-              name="radios-btn-component"
-              button-variant="light"
-              size="sm"
-              buttons>
-              <b-form-radio value="all">All ({{ rowsAll }})</b-form-radio>
-              <b-form-radio value="journal article" :disabled="rowsPublications==0">Published articles ({{ rowsPublications }})</b-form-radio>
-              <b-form-radio value="preprint" :disabled="rowsPreprints==0">Preprints ({{ rowsPreprints }})</b-form-radio>
-              <b-form-radio value="trial registration" :disabled="rowsTrialRegistrations==0">Registered trials ({{ rowsTrialRegistrations}})</b-form-radio>
-          </b-form-radio-group>
-          </b-button-group>
-        </b-button-toolbar>
-        <b-button-toolbar
-          style="margin-bottom: 2em"
-          class="p-2">
-          <b-button-group>
-            <b-form-radio-group
-              v-model="newestFirst"
-              :options="sortOptions"
-              button-variant="light"
-              size="sm"
-              buttons
-              name="radios-btn-default">
-            </b-form-radio-group>
-            <b-button
-              v-bind:disabled="rows == 0"
-              v-on:click="download"
-              size="sm"
-              v-b-tooltip.hover
-              title="Download citations">
-              <b-icon icon="cloud-download"></b-icon>
-            </b-button>
-          </b-button-group>
-        </b-button-toolbar>
-      </div>
+          <b-button-toolbar
+            style="margin-bottom: 2em"
+            class="mr-auto p-2"
+            >
+            <b-button-group>
+              <b-form-radio-group
+                v-model="filterType"
+                name="radios-btn-component"
+                button-variant="light"
+                size="sm"
+                buttons>
+                <b-form-radio value="all">All ({{ rowsAll }})</b-form-radio>
+                <b-form-radio value="journal article" :disabled="rowsPublications==0">Published articles ({{ rowsPublications }})</b-form-radio>
+                <b-form-radio value="preprint" :disabled="rowsPreprints==0">Preprints ({{ rowsPreprints }})</b-form-radio>
+                <b-form-radio value="trial registration" :disabled="rowsTrialRegistrations==0">Registered trials ({{ rowsTrialRegistrations}})</b-form-radio>
+              </b-form-radio-group>
+            </b-button-group>
+          </b-button-toolbar>
+          <b-button-toolbar
+            style="margin-bottom: 2em"
+            class="p-2">
+            <b-button-group>
+              <b-form-radio-group
+                v-model="newestFirst"
+                :options="sortOptions"
+                button-variant="light"
+                size="sm"
+                buttons
+                name="radios-btn-default">
+              </b-form-radio-group>
+              <b-button
+                v-bind:disabled="rows == 0"
+                v-on:click="download"
+                size="sm"
+                v-b-tooltip.hover
+                title="Download citations">
+                <b-icon icon="cloud-download"></b-icon>
+              </b-button>
+            </b-button-group>
+          </b-button-toolbar>
+        </div>
 
         <Card
           v-for="item in sortedArticles"
@@ -73,13 +74,14 @@
       <div v-else class="result-cards">
         <div v-if="showExamples" style="text-align: center; margin-top: 2em">
           <strong>No results</strong>
-        </div>
-        <div v-else>
-          <Examples />
-        </div>
+      </div>
+      <div v-else>
+        <Examples />
       </div>
     </div>
   </div>
+  </transition>
+</div>
 </template>
 
 <script>
@@ -190,7 +192,6 @@ export default {
         }
       };
       let result = this.getArticles.slice().sort(sortFn);
-
       return getPaginatedItems(result, this.currentPage, this.perPage);
     },
   },
@@ -204,4 +205,12 @@ export default {
 .results .results-card:first-child {
   margin-top: 2em;
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .125s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 </style>
