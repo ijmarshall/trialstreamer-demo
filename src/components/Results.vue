@@ -27,7 +27,7 @@
               size="sm"
               buttons
               >
-              <b-form-radio value="all">All ({{ rows }})</b-form-radio>
+              <b-form-radio value="all">All ({{ rowsAll }})</b-form-radio>
               <b-form-radio value="journal article" :disabled="rowsPublications==0">Published articles ({{ rowsPublications }})</b-form-radio>
               <b-form-radio value="preprint" :disabled="rowsPreprints==0">Preprints ({{ rowsPreprints }})</b-form-radio>
               <b-form-radio value="trial registration" :disabled="rowsTrialRegistrations==0">Registered trials ({{ rowsTrialRegistrations}})</b-form-radio>
@@ -146,6 +146,9 @@ export default {
     },
   },
   computed: {
+    rowsAll() {
+      return this.$store.getters.getArticles.length;
+    },
     rows() {
       return this.getArticles.length;
     },
@@ -158,7 +161,6 @@ export default {
     rowsTrialRegistrations() {
       return this.$store.getters.getArticles.filter(function(el) {return el.article_type=='trial registration'}).length;
     },
-
     getLoadingArticles() {
       return this.$store.getters.getLoadingArticles;
     },
