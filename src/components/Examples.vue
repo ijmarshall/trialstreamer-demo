@@ -1,32 +1,43 @@
 <template>
-<div>
-  <p>or try some of these examples:</p>
-  <ul>
-      <li><router-link :to="{path: '/', query: {q: example1}}">What are the effects of antivirals for treating COVID-19?</router-link></li>
-      <li><router-link :to="{path: '/', query: {q: example2}}">What is the best ventilation strategy for acute respiratory distress syndrome (ARDS)?</router-link></li>
-      <li><router-link :to="{path: '/', query: {q: example3}}">Do chloroquine or hydroxychloroquine improve outcomes in COVID-19 infection?</router-link></li>
-      <li><router-link :to="{path: '/', query: {q: example4}}">What trials are underway on the use of Extracorporeal Membrane Oxygenation (ECMO) in COVID-19?</router-link></li>
-    </ul>
+<b-container class="shadow-sm p-3 mb-5 bg-white rounded well">
+  <b-row>
+    <b-col>
+      <p class=" lead" >Try some of these examples:</p>
+      <ul>
+        <li><router-link :to="{path: '/', query: {q: example1}}">What are the effects of antivirals for treating COVID-19?</router-link></li>
+        <li><router-link :to="{path: '/', query: {q: example2}}">What is the best ventilation strategy for acute respiratory distress syndrome (ARDS)?</router-link></li>
+        <li><router-link :to="{path: '/', query: {q: example3}}">Do chloroquine or hydroxychloroquine improve outcomes in COVID-19 infection?</router-link></li>
+        <li><router-link :to="{path: '/', query: {q: example4}}">What trials are underway on the use of Extracorporeal Membrane Oxygenation (ECMO) in COVID-19?</router-link></li>
+      </ul>
 
-    <b-container fluid class="p-4">
-      <b-row>A collaboration between:</b-row>
+      <b-container fluid class="p-4">
+        <b-row><p class="lead">A collaboration between:</p></b-row>
         <b-row>
           <b-col>
-            <b-img thumbnail fluid width="250px" src="@/assets/kings.jpg" alt="King's College London"></b-img>
+            <b-link href="https://www.kcl.ac.uk/">
+              <b-img thumbnail fluid width="250px" src="@/assets/kings.jpg" alt="King's College London"></b-img>
+            </b-link>
           </b-col>
           <b-col>
-            <b-img thumbnail fluid width="250px" src="@/assets/northeastern.png" alt="Northeastern University"></b-img>
+            <b-link href="https://www.northeastern.edu/">
+              <b-img thumbnail fluid width="250px" src="@/assets/northeastern.png" alt="Northeastern University"></b-img>
+            </b-link>
           </b-col>
           <b-col>
-            <b-img thumbnail fluid width="250px" src="@/assets/vortext.png" alt="Vortext Systems"></b-img>
+            <b-link href="https://vortext.systems/">
+              <b-img thumbnail fluid width="250px" src="@/assets/vortext.png" alt="Vortext Systems"></b-img>
+            </b-link>
           </b-col>
           <b-col>
-            <b-img thumbnail fluid width="250px" src="@/assets/logo.svg" alt="powered by RobotReviewer"></b-img>
+            <b-link href="https://www.robotreviewer.net/">
+              <b-img thumbnail fluid width="250px" src="@/assets/logo.svg" alt="powered by RobotReviewer"></b-img>
+            </b-link>
           </b-col>
-
+        </b-row>
+      </b-container>
+    </b-col>
   </b-row>
 </b-container>
-</div>
 </template>
 
 
@@ -41,9 +52,9 @@ export default {
       example3: JSURL.stringify([{"field":"population", "text": "COVID-19 [population]", "mesh_ui":"C000657245"}, {"field": "interventions", "text": "Chloroquine [interventions]", "mesh_ui": "D002738"}]),
       example4: JSURL.stringify([{"field":"population", "text": "COVID-19 [population]", "mesh_ui":"C000657245"}, {"field": "interventions", "text": "Extracorporeal Membrane Oxygenation (ECMO) [interventions]", "mesh_ui": "D015199"}]),
 
-      
 
-      
+
+
   }
 },
 name: "Examples",
@@ -53,4 +64,8 @@ components: {},
 </script>
 
 <style scoped>
+  .well {
+  margin-top: 1em;
+
+  }
 </style>
