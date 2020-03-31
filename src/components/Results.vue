@@ -4,7 +4,7 @@
     <Examples />
   </div>
   <div v-show="!showExamples">
-    <transition name="fade" mode="out-in">
+    <transition name="fade" mode="out-in" appear>
       <div v-if="getLoadingArticles"
            key="loading"
            class="d-flex justify-content-center"
@@ -18,7 +18,7 @@
             Showing <span v-if="isTruncated">first {{rows}} results only</span>
             <span v-else>{{ rows }} results</span>
           </p>
-          <b-container flex>
+          <b-container flex class="p-0">
             <b-row>
               <b-col cols="auto" class="mr-auto">
                 <b-button-toolbar
