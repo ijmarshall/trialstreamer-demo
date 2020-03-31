@@ -1,11 +1,11 @@
 <template>
 <div class="search">
-  
-<b-container class="shadow-sm p-3 mb-5 bg-white ">
-  
-  <p><strong>Please note</strong>: this site is an early release and in active development. We are making frequent changes to the annotations. Please see the <a href="about/">About page</a> for some important information about interpreting the results.</p> 
+  <b-alert show variant="warning" dismissible fade>
+    <strong>Please note</strong>: this site is an early release and in active development.
+      <br>
+      We are making frequent changes to the annotations. Please see the <a href="about/">About page</a> for some important information about interpreting the results.
+  </b-alert>
 
-</b-container>
   <vue-tags-input
     v-model="tag"
     :tags="tags"
