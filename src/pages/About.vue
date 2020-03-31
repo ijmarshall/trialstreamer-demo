@@ -6,8 +6,9 @@
 
     <p>To address this need, we have developed Trialstreamer, which is an evidence surveillance system powered by artificial intelligence (AI). We continuously scan key sources of research (PubMed, and the WHO International Clinical Trials Registry Platform [ICTRP]), and use our RobotReviewer machine learning system to automatically find the RCTs, and extract key pieces of information from them. </p>
 
+    <h1>Important information</h1>
 
-
+    <p>This site is an <strong>early release</strong>. We are making frequent changes and improvements, and this should be considered as an early pre-print. Nonetheless, we hope that this provides a useful view of the evidence for the research community. We welcome any feedback and suggestions. We emphasise that this tool should not be considered a replacement for a systematic review.</p>
 
     <h1>People</h1>
 
