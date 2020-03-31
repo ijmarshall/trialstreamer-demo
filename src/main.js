@@ -24,7 +24,7 @@ Vue.config.productionTip = false
 
 const store = new Vuex.Store({
   state: {
-    loading_articles: false,
+    loading_articles: true,
     tags: [],
     articles: []
   },
@@ -73,7 +73,6 @@ const router = new VueRouter({
   mode: 'history',
   routes // short for `routes: routes`
 })
-
 
 new Vue({
   render: h => h(App),
