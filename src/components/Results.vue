@@ -1,14 +1,14 @@
 <template>
 <div class="results">
-  <transition name="fade" mode="out-in">
-    <div v-if="getLoadingArticles"
-         key="loading"
-         class="d-flex justify-content-center"
-         style="margin-top: 4rem; z-index:100; width: 100%">
-      <b-img src="@/assets/loading.gif" class="loading-img" style="opacity: 0.2; filter: blur(1px);" />
-    </div>
-    <div v-else key="results">
-      <div v-if="sortedArticles.length > 0" >
+  <div v-if="!showExamples">
+    <transition name="fade" mode="out-in">
+      <div v-if="getLoadingArticles"
+           key="loading"
+           class="d-flex justify-content-center"
+           style="margin-top: 4rem; z-index:100; width: 100%">
+        <b-img src="@/assets/loading.gif" class="loading-img" style="opacity: 0.2; filter: blur(1px);" />
+      </div>
+      <div v-if="sortedArticles.length > 0" key="results">
         <p style="font-size: small; text-align: right;">
           <b-icon-exclamation-triangle v-if="isTruncated" />
           Showing <span v-if="isTruncated">first 250 results only</span>
@@ -75,15 +75,18 @@
         </div>
       </div>
       <div v-else class="result-cards">
-        <div v-if="showExamples" style="text-align: center; margin-top: 2em">
+        <div style="text-align: center; margin-top: 2em">
           <strong>No results</strong>
+        </div>
       </div>
-      <div v-else>
-        <Examples />
-      </div>
-    </div>
+
+    </transition>
   </div>
-  </transition>
+  <div v-else>
+      <Examples />
+    </div>
+
+
 </div>
 </template>
 
@@ -123,6 +126,11 @@ export default {
   },
   props: {},
   watch: {
+    getTags(to, from) {
+      if(!this._.isEqual(to, from)) {
+        this.filterType = 'all';
+      }
+    },
     getArticles(to, from) {
       if(!this._.isEqual(to, from)) {
         this.currentPage = 1;
@@ -190,7 +198,7 @@ export default {
       return this.$store.getters.getArticles.length >= 250;
     },
     showExamples() {
-      return !!this.$store.getters.getTags.length;
+      return !this.$store.getters.getTags.length;
     },
     sortedArticles() {
       let newest = this.newestFirst;

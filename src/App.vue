@@ -1,17 +1,20 @@
 <template>
 <div id="app">
   <Title />
-   <div class="container push">
+  <div class="container push">
     <router-view></router-view>
   </div>
+  <ToTop />
 </div>
 </template>
 
 <script>
 import Title from "./components/Title.vue";
+import ToTop from "./components/ToTop.vue";
+
 export default {
   name: "app",
-  components: {Title}
+  components: {Title, ToTop}
 };
 
 </script>
