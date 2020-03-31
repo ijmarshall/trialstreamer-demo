@@ -15,7 +15,7 @@
         <div v-if="sortedArticles.length > 0">
           <p style="font-size: small; text-align: right;">
             <b-icon-exclamation-triangle v-if="isTruncated" />
-            Showing <span v-if="isTruncated">first 250 results only</span>
+            Showing <span v-if="isTruncated">first {{rows}} results only</span>
             <span v-else>{{ rows }} results</span>
           </p>
           <b-container flex>
@@ -194,7 +194,7 @@ export default {
       }
     },
     isTruncated() {
-      return this.$store.getters.getArticles.length >= 250;
+      return this.getArticles.length >= 250;
     },
     showExamples() {
       return !this.$store.getters.getTags.length;
