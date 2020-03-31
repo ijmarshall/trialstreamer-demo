@@ -1,6 +1,9 @@
 <template>
 <div class="results">
-  <div v-if="!showExamples">
+  <div v-if="showExamples">
+    <Examples />
+  </div>
+  <div v-else>
     <transition name="fade" mode="out-in">
       <div v-if="getLoadingArticles"
            key="loading"
@@ -79,14 +82,8 @@
           <strong>No results</strong>
         </div>
       </div>
-
     </transition>
   </div>
-  <div v-else>
-      <Examples />
-    </div>
-
-
 </div>
 </template>
 
