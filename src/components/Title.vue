@@ -1,9 +1,9 @@
 <template>
+  <div>
   <b-navbar toggleable="sm">
     <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
     <b-navbar-brand to="/" >
-
        <img src="@/assets/logo.png" class="d-inline-block align-top" alt="Kitten" height="64">
     </b-navbar-brand>
 
@@ -13,14 +13,17 @@
           a living, annotated database of {{stats.num_rcts}} randomized controlled trials.
           <span>Last updated {{ago}}.</span>
         </b-nav-text>
-
       </b-navbar-nav>
         <b-navbar-nav class="ml-auto ">
           <b-nav-item to="/about" right>About</b-nav-item>
         </b-navbar-nav>
     </b-collapse>
+
+
   </b-navbar>
 
+
+</div>
 </template>
 
 <script>
