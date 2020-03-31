@@ -3,8 +3,8 @@
         v-if="isVisible"
         title="Back to top"
         @click="backToTop">
-  <b-icon icon="caret-up-fill"  />
-</button>
+    <b-icon icon="caret-up-fill"  />
+  </button>
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     initToTopButton: function() {
-      $(document).bind('scroll', function() {
+      $(document).bind('scroll touchmove', function() {
         var backToTopButton = $('.goTop');
         if ($(document).scrollTop() > 250) {
           backToTopButton.addClass('isVisible');

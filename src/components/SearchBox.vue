@@ -41,9 +41,15 @@ export default {
       error: null
     };
   },
+  computed: {
+    isLoading() {
+      return this.$store.getters.getLoadingArticles;
+    }
+  },
   watch: {
     tag: "initItems",
     $route(to) {
+      this.$store.commit("loadingArticles", true);
       let tags = JSURL.parse(to.query.q) || [];
       if(tags !== this.tags || !tags.length) {
         this.tags = tags.map((item) => ({
@@ -53,7 +59,9 @@ export default {
         }));
         this.$store.commit("updateTags", this.tags);
       }
-      this.fetch(tags);
+      if(tags.length) {
+        this.fetch(tags);
+      }
     }
   },
   beforeMount() {
@@ -65,14 +73,13 @@ export default {
         text: item.text,
         mesh_ui: item.mesh_ui,
       }));
-
       this.fetch(tags);
     }
   },
   methods: {
     fetch(tags) {
-      let self = this;
       this.$store.commit("loadingArticles", true);
+      let self = this;
       const url = `${process.env.VUE_APP_SERVER_URL}/picosearch`;
       axios
         .post(
@@ -90,7 +97,6 @@ export default {
         .finally(function() {
           self.$store.commit("loadingArticles", false);
         });
-
     },
     update(newTags) {
       this.autocompleteItems = [];
@@ -123,7 +129,7 @@ export default {
             console.error(e.stack);
           })
           .finally(() => this.loading = false);
-      }, 250);
+      }, 125);
     },
   },
 };
