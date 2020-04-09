@@ -54,6 +54,7 @@ const store = new Vuex.Store({
 
 import About from "./pages/About.vue";
 import Search from "./pages/Search.vue";
+import ShowStudy from "./pages/ShowStudy.vue";
 
 
 // 2. Define some routes
@@ -63,7 +64,8 @@ import Search from "./pages/Search.vue";
 // We'll talk about nested routes later.
 const routes = [
   { path: '/', component: Search, name: 'search'},
-  { path: '/about', component: About, name: 'about' }
+  { path: '/about', component: About, name: 'about' },
+  { path: '/show_study/:study_id', component: ShowStudy, name: 'show_study'}
 ]
 
 // 3. Create the router instance and pass the `routes` option
