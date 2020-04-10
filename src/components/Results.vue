@@ -197,7 +197,8 @@ export default {
       return this.getArticles.length >= 250;
     },
     showExamples() {
-      return !this.$store.getters.getTags.length;
+      return this.getArticles.length==0;
+      // return !this.$store.getters.getTags.length;
     },
     sortedArticles() {
       let newest = this.newestFirst;

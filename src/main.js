@@ -65,7 +65,7 @@ import ShowStudy from "./pages/ShowStudy.vue";
 const routes = [
   { path: '/', component: Search, name: 'search'},
   { path: '/about', component: About, name: 'about' },
-  { path: '/show_study/:study_id', component: ShowStudy, name: 'show_study'}
+  { path: '/showstudy/:studyid', component: ShowStudy, name: 'showstudy'}
 ]
 
 // 3. Create the router instance and pass the `routes` option

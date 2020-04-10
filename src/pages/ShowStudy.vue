@@ -2,6 +2,7 @@
   <div>
     <!-- <SearchBox /> -->
     <Results />
+
   </div>
 </template>
 
@@ -13,7 +14,7 @@ import Results from "../components/Results.vue";
 
 
 export default {
-  name: "Search",
+  name: "ShowStudy",
   components: {
     Results,
   },
@@ -25,7 +26,7 @@ export default {
   mounted: function() {
     const self = this
     this.$nextTick(function() {
-      const url = `${process.env.VUE_APP_SERVER_URL}/show_trial/${this.$route.params.study_id}`;
+      const url = `${process.env.VUE_APP_SERVER_URL}/show_trial/${this.$route.params.studyid}`;
       //alert(this.$route.params.study_id);
       //alert(url)
       axios
