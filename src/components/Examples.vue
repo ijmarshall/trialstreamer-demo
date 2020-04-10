@@ -51,10 +51,10 @@ import JSURL from "jsurl";
 export default {
   data() {
     return {
-      example1: JSURL.stringify([{"field":"population", "text": "COVID-19 [population]", "mesh_ui":"C000657245"}, {"field": "interventions", "text": "Antiviral agents [interventions]", "mesh_ui": "D000998"}]),
-      example2: JSURL.stringify([{"field":"population", "text": "Acute Respiratory Distress Syndrome [population]", "mesh_ui":"D012128"}, {"field": "interventions", "text": "Ventilation [interventions]", "mesh_ui": "D014691"}]),
-      example3: JSURL.stringify([{"field":"population", "text": "COVID-19 [population]", "mesh_ui":"C000657245"}, {"field": "interventions", "text": "Chloroquine [interventions]", "mesh_ui": "D002738"}]),
-      example4: JSURL.stringify([{"field":"population", "text": "COVID-19 [population]", "mesh_ui":"C000657245"}, {"field": "interventions", "text": "Extracorporeal Membrane Oxygenation (ECMO) [interventions]", "mesh_ui": "D015199"}]),
+      example1: JSURL.stringify([{"field":"population", "text": "COVID-19 [population]", "cui":"TS-COV19"}, {"field": "interventions", "text": "Antiviral agents [interventions]", "cui": "C0003451"}]),
+      example2: JSURL.stringify([{"field":"population", "text": "Acute Respiratory Distress Syndrome [population]", "cui":"C0035222"}, {"field": "interventions", "text": "Ventilation [interventions]", "cui": "C0554804"}]),
+      example3: JSURL.stringify([{"field":"population", "text": "COVID-19 [population]", "cui":"TS-COV19"}, {"field": "interventions", "text": "Chloroquine [interventions]", "cui": "C0008269"}]),
+      example4: JSURL.stringify([{"field":"population", "text": "COVID-19 [population]", "cui":"TS-COV19"}, {"field": "interventions", "text": "Extracorporeal Membrane Oxygenation (ECMO) [interventions]", "cui": "C0015357"}]),
 
 
 
