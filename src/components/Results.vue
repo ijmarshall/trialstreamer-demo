@@ -144,7 +144,7 @@ export default {
         data: {
           terms: this.getTags.map((item) => ({
             field: item.classes,
-            mesh_ui: item.mesh_ui,
+            cui: item.cui,
           })),
           retmode: "ris",
         },

@@ -61,7 +61,7 @@ export default {
         this.tags = tags.map((item) => ({
           classes: item.field,
           text: item.text,
-          mesh_ui: item.mesh_ui,
+          cui: item.cui,
         }));
         this.$store.commit("updateTags", this.tags);
       }
@@ -77,7 +77,7 @@ export default {
       this.tags = tags.map((item) => ({
         classes: item.field,
         text: item.text,
-        mesh_ui: item.mesh_ui,
+        cui: item.cui,
       }));
       this.fetch(tags);
     }
@@ -109,7 +109,7 @@ export default {
       let tags = newTags.map((item) => ({
         field: item.classes,
         text: item.text,
-        mesh_ui: item.mesh_ui,
+        cui: item.cui,
       }));
 
       this.$router.push({ name: 'search', query: { q: JSURL.stringify(tags) }});
@@ -126,8 +126,8 @@ export default {
           .then((response) => {
             this.autocompleteItems = response.data.map((item) => ({
               classes: item.field,
-              text: item.mesh_pico_display,
-              mesh_ui: item.mesh_ui,
+              text: item.cui_pico_display,
+              cui: item.cui,
             }));
           })
           .catch(function(e) {
