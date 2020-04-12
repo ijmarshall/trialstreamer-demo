@@ -67,6 +67,8 @@ export default {
       }
       if(tags.length) {
         this.fetch(tags);
+      } else {
+        this.$store.commit("updateArticles", []); 
       }
     }
   },
