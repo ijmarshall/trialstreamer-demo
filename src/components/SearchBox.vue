@@ -71,6 +71,7 @@ export default {
     }
   },
   beforeMount() {
+    this.$store.commit("updateArticles", []);
     let tags = JSURL.parse(this.$route.query.q);
     if(tags && tags.length) {
       this.$store.commit("updateTags", tags);
