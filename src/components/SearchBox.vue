@@ -1,6 +1,13 @@
 <template>
 <div class="search">
-  <b-alert show variant="warning" dismissible fade>
+    <!-- <b-alert show variant="primary" dismissible fade> -->
+    <!-- <strong>ICTRP Updating 18th April 2020</strong> -->
+    <!--   <br> -->
+    <!--   Our database of ongoing trials is currently updating. Search results will be incomplete over the next few days. -->
+  <!-- </b-alert> -->
+
+    
+    <b-alert show variant="primary" dismissible fade>
     <strong>Please note</strong>: this site is an early release and in active development.
       <br>
       We are making frequent changes to the annotations. Please see the <a href="about/">About page</a> for some important information about interpreting the results.
