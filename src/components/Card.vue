@@ -161,7 +161,7 @@ export default {
     },
     distinct: function (strs) {
       let d = new Map(strs.map((s) => [s.toLowerCase(), s]));
-      return [...d.values()];
+      return [...d.values()].filter(n => n);
     }
   }
 }
