@@ -99,22 +99,15 @@
             </ul>
           </b-col>
         </b-row>
-        <div
+        <div v-if="item.prob_low_rob"
           class="risk-of-bias"
           v-b-tooltip.hover.right
           title="As determined by RobotReviewer based on the abstract text">
-          <div>
-            <span>Allocation concealment: </span>
-            <span v-bind:data-bias="item.low_ac_bias ? 'l' : 'h'">{{item.low_ac_bias ? "low" : "high/unknown"}}</span>
-          </div>
-          <div>
-            <span>Blinding of participants and personnel: </span>
-            <span v-bind:data-bias="item.low_bpp_bias ? 'l' : 'h'">{{item.low_bpp_bias ? "low" : "high/unknown"}}</span>
-          </div>
-          <div>
-            <span>Random sequence generation: </span>
-            <span v-bind:data-bias="item.low_rcg_bias ? 'l' : 'h'">{{item.low_rcg_bias ? "low" : "high/unknown"}}</span>
-          </div>
+            <div>
+              <span>Probability of low risk of bias: </span>
+              <span>{{Math.round(100*item.prob_low_rob)}}%</span>
+              <!-- <span v-bind:data-bias="item.low_ac_bias ? 'l' : 'h'">{{item.low_ac_bias ? "low" : "high/unknown"}}</span> -->
+            </div>
         </div>
       </b-container>
     </b-card-text>
