@@ -43,7 +43,7 @@
                   style="margin-bottom: 2em">
                   <b-button-group>
                     <b-form-radio-group
-                      v-model="newestFirst"
+                      v-model="sortOrder"
                       :options="sortOptions"
                       button-variant="light"
                       size="sm"
@@ -109,16 +109,16 @@ export default {
     return {
       perPage: 25,
       currentPage: 1,
-      newestFirst: true,
+      sortOrder: 'year',
       filterType: 'all',
       sortOptions: [
+          {
+              text: "Get large/high quality trials first",
+              value: 'score',
+          },
         {
           text: "Newest first",
-          value: true,
-        },
-        {
-          text: "Oldest first",
-          value: false,
+          value: 'year',
         },
       ],
     };
@@ -200,12 +200,12 @@ export default {
       return !this.$store.getters.getTags.length && !this.getArticles.length;
     },
     sortedArticles() {
-      let newest = this.newestFirst;
+      let sorttype= this.sortOrder;
       let sortFn = function (a, b) {
-        if (newest) {
-          return b.year - a.year;
+        if (sorttype=='score') {
+          return b.score - a.score;
         } else {
-          return a.year - b.year;
+          return b.year - a.year;
         }
       };
       let result = this.getArticles.slice().sort(sortFn);

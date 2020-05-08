@@ -9,7 +9,13 @@
         <li><router-link :to="{path: '/', query: {q: example3}}">Do chloroquine or hydroxychloroquine improve outcomes in COVID-19 infection?</router-link></li>
         <li><router-link :to="{path: '/', query: {q: example4}}">What trials are underway on the use of Extracorporeal Membrane Oxygenation (ECMO) in COVID-19?</router-link></li>
       </ul>
-
+    <b-container>
+        <p class="lead">Open access:</p>
+        <ul>
+            <li>Daily data updates freely available at <a href="https://doi.org/10.5281/zenodo.3767068">Zenodo <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.3767068.svg" alt="DOI"></a></li>
+            <li>Source code available for <a href="https://github.com/ijmarshall/robotreviewer">RobotReviewer</a>, <a href="https://github.com/ijmarshall/trialstreamer">the Trialstreamer database</a>, and <a href="https://github.com/ijmarshall/trialstreamer-demo">this demonstration website</a>.</li>
+        </ul>
+    </b-container>
       <b-container>
         <b-row>
           <b-col  xs="1" md="3">
