@@ -26,18 +26,20 @@ const store = new Vuex.Store({
   state: {
     loading_articles: true,
     tags: [],
-    articles: []
+    articles: [],
+    summary: ""
   },
   mutations: {
     updateTags (state, new_tags) {
       state.tags = new_tags;
     },
     updateArticles (state, new_articles) {
-      state.articles = new_articles;
+      state.summary = new_articles[0];
+      state.articles = new_articles.slice(1,);
     },
     loadingArticles (state, loading) {
       state.loading_articles = loading;
-    }
+    },
   },
   getters: {
     getTags(state) {
@@ -48,7 +50,10 @@ const store = new Vuex.Store({
     },
     getLoadingArticles(state) {
       return state.loading_articles;
-    }
+    },
+    getSummary(state){
+      return state.summary;
+    },
   },
 })
 

@@ -11,6 +11,7 @@
            style="margin-top: 4rem; z-index:100; width: 100%">
         <b-img src="@/assets/loading.gif" class="loading-img" style="opacity: 0.2; filter: blur(1px);" height="240" />
       </div>
+      
       <div v-else key="results" class="result-wrapper">
         <div v-if="sortedArticles.length > 0">
           <p style="font-size: small; text-align: right;">
@@ -18,6 +19,14 @@
             Showing <span v-if="isTruncated">first {{rows}} results only</span>
             <span v-else>{{ rows }} results</span>
           </p>
+
+          <b-container flex class="p-0">
+          <blockquote>
+
+          <p class="mb-0"><strong>Automatically generated summary (β!)</strong>: {{ summary }}</p>
+          </blockquote>
+          </b-container>
+
           <b-container flex class="p-0">
             <b-row>
               <b-col cols="auto" class="mr-auto">
@@ -198,6 +207,9 @@ export default {
     },
     showExamples() {
       return !this.$store.getters.getTags.length && !this.getArticles.length;
+    },
+    summary() {
+      return this.$store.getters.getSummary;
     },
     sortedArticles() {
       let sorttype= this.sortOrder;
