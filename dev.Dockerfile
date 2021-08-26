@@ -6,7 +6,6 @@ ADD ./branding branding
 ADD ./public public
 ADD ./package.json package.json
 ADD ./package-lock.json package-lock.json
-ADD ./entrypoint.sh entrypoint.sh
 ADD ./src src
 
 RUN npm install
