@@ -1,10 +1,18 @@
-FROM node:12-alpine
-
+FROM node:12-alpine as build-stage
 WORKDIR /app
 
-COPY . .
+COPY package*.json ./
 
 RUN npm install
-#RUN npm rebuild node-sass
+COPY ./ .
+RUN npm run build
 
-CMD npm run serve
+FROM nginx as production-stage
+
+RUN mkdir /app
+
+COPY --from=build-stage /app/dist /app
+COPY ./branding /app/branding
+COPY ./public /app/public
+
+COPY nginx.conf /etc/nginx/nginx.conf
