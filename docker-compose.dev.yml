@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   demo:
-    image: docker.unholster.com/trialstreamer-demo
+    image: trialstreamer-demo
     build:
       context: .
       dockerfile: dev.Dockerfile
