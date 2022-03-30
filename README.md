@@ -41,4 +41,3 @@ Note: Trialstreamer-demo service will be exposed at port 8080 and can be accesse
 ### Run for production
 Run `docker-compose up --build --remove-orphans` to build and run the container for production with an Nginx server.
 
-Note: Trialstreamer-demo service will be exposed at port 80 in a production environment.
