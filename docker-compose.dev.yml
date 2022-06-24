@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+
+  demo:
+    image: trialstreamer-demo
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+    restart: unless-stopped
+    ports:
+      - 8080:8080
